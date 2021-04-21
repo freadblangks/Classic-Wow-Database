@@ -43,7 +43,6 @@ if(!$items = load_cache(7, $cache_key))
 
 	save_cache(7, $cache_key, $items);
 }
-echo"test";
 
 $page = array(
 	'Mapper' => false,
