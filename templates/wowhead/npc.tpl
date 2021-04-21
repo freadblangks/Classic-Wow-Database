@@ -23,10 +23,56 @@
 					[li]{#Damage#}: {$npc.dmg_min} - {$npc.dmg_max} [span class=\"school-{$npc.dmgschool}\"]({$npc.school})[/span][/li]
 					{if $npc.armor > 0}[li]{#Armor#}: {$npc.armor}[/li]{/if}
 					[li]{#Model#}: {$npc.model}[/li]
-					{if $npc.scripted}[li][tooltip=mangos_npc_scripted_{if $npc.scripted==mob_eventai}eai{else}sd2{/if}][color=green]{#Scripted#}[/color][/tooltip][/li]{/if}[/ul]{/strip}", "markup-e826d6c6");</script>					</td></tr>						{if $ss_conf!= null}						<th>{#Screenshots#}<span id="ss_num"></span>						<div id="infobox-sticky" class="infobox-sticky"></div>						<script type="text/javascript">ss_appendSticky()</script>						</th>						{/if}			</table>{/if}			<div class="text">				{if $option.wp_button==1}<a {if $npc.entry!=null} onmouseover="Tooltip.showAtCursor(event, '<sub><img width=15 src=templates/wowhead/images/wowpedia.ico></sub> {#Wsearch#} {"WoWpedia.org"}', 0, 0, 'q')" onmousemove="Tooltip.cursorUpdate(event)" onmouseout="Tooltip.hide()" href="https://www.wowpedia.org/index.php?title=Special:Search&amp;search={$npc.name}&amp;go=Go"{/if} class="button-red{if $npc.entry==null}-disabled{/if}"><em><b><i>Wowpedia</i></b><span>Wowpedia</span></em></a>{/if}				{if $option.wh_button==1}<a {if $option.wh_tooltip==1}rel="wowhead" href="https://www.wowhead.com/?{$query}"{else}onmouseover="Tooltip.showAtCursor(event, '<sub><img width=15 src=templates/wowhead/images/wowhead.png></sub> {#Wsearch#} {"Wowhead.com"}', 0, 0, 'q')" onmousemove="Tooltip.cursorUpdate(event)" onmouseout="Tooltip.hide()" href="https://www.wowhead.com/{$query}"{/if} class="button-red"><em><b><i>Wowhead</i></b><span>Wowhead</span></em></a>{/if}				{if $option.button==1}					<a {if $npc.entry!=null} id="dsgndslgn464d" onclick="this.blur();ModelViewer.show({ldelim}type: 1,typeId: {$npc.entry},displayId: {$npc.model}{rdelim})"{/if} class="button-red{if $npc.entry==null}-disabled{/if}"><em><b><i>{#Viewin3D#}</i></b><span>{#Viewin3D#}</span></em></a>{/if}				{if $npc.entry!=null}<h1>{$npc.name}{if $npc.subname} &lt;{$npc.subname}&gt;{/if}</h1>				<div id="minibox"></div>					{if $option.image==1}						<script type="text/javascript">Markup.printHtml("[minibox][modelviewer img=https://wow.zamimg.com/modelviewer/thumbs/npc/{$npc.model}.png npc={$npc.model} {if $npc.type==7}humanoid=1{/if}]{$npc.name} {#Viewin3D#}", "minibox");</script>
+					{if $npc.scripted}[li][tooltip=mangos_npc_scripted_{if $npc.scripted==mob_eventai}eai{else}sd2{/if}][color=green]{#Scripted#}[/color][/tooltip][/li]{/if}[/ul]{/strip}", "markup-e826d6c6");</script>
+					</td></tr>
+						{if $ss_conf!= null}
+						<th>{#Screenshots#}<span id="ss_num"></span>
+						<div id="infobox-sticky" class="infobox-sticky"></div>
+						<script type="text/javascript">ss_appendSticky()</script>
+						</th>
+						{/if}
+			</table>{/if}
+			<div class="text">
+				{if $option.wp_button==1}<a {if $npc.entry!=null} onmouseover="Tooltip.showAtCursor(event, '<sub><img width=15 src=templates/wowhead/images/wowpedia.ico></sub> {#Wsearch#} {"WoWpedia.org"}', 0, 0, 'q')" onmousemove="Tooltip.cursorUpdate(event)" onmouseout="Tooltip.hide()" href="https://www.wowpedia.org/index.php?title=Special:Search&amp;search={$npc.name}&amp;go=Go"{/if} class="button-red{if $npc.entry==null}-disabled{/if}"><em><b><i>Wowpedia</i></b><span>Wowpedia</span></em></a>{/if}
+				{if $option.wh_button==1}<a {if $option.wh_tooltip==1}rel="wowhead" href="https://www.wowhead.com/?{$query}"{else}onmouseover="Tooltip.showAtCursor(event, '<sub><img width=15 src=templates/wowhead/images/wowhead.png></sub> {#Wsearch#} {"Wowhead.com"}', 0, 0, 'q')" onmousemove="Tooltip.cursorUpdate(event)" onmouseout="Tooltip.hide()" href="https://www.wowhead.com/{$query}"{/if} class="button-red"><em><b><i>Wowhead</i></b><span>Wowhead</span></em></a>{/if}
+				{if $option.button==1}
+					<a {if $npc.entry!=null} id="dsgndslgn464d" onclick="this.blur();ModelViewer.show({ldelim}type: 1,typeId: {$npc.entry},displayId: {$npc.model}{rdelim})"{/if} class="button-red{if $npc.entry==null}-disabled{/if}"><em><b><i>{#Viewin3D#}</i></b><span>{#Viewin3D#}</span></em></a>{/if}
+				{if $npc.entry!=null}<h1>{$npc.name}{if $npc.subname} &lt;{$npc.subname}&gt;{/if}</h1>
+				<div id="minibox"></div>
+					{if $option.image==1}
+						<script type="text/javascript">Markup.printHtml("[minibox][modelviewer img=https://wow.zamimg.com/modelviewer/thumbs/npc/{$npc.model}.png npc={$npc.model} {if $npc.type==7}humanoid=1{/if}]{$npc.name} {#Viewin3D#}", "minibox");</script>
 					{elseif $option.image==2}
-						<script type="text/javascript">Markup.printHtml("[minibox][img src=https://wow.zamimg.com/modelviewer/thumbs/npc/{$npc.model}.png]", "minibox");</script>					{/if}				{else}<br><div class="inputbox"><h1><b>{$npc.name}</b></h1><div id="inputbox-error"><br><span class=q10>This NPC doesn't exist in our database</span>.</div><!--  --></div><br>{/if}{if $npc.entry!=null}{if $npc.heroic}				<div>{if $npc.heroic.type == 1}{#This_is_heroic_NPC#}{else}{#This_is_normal_NPC#}{/if} <a href="?npc={$npc.heroic.entry}">{$npc.heroic.name}</a>.</div>				<div class="pad"></div>{/if}{if $npc.position}				<div>{#This_NPC_can_be_found_in#} {strip}<span id="locations">					{foreach from=$npc.position item=zone name=zone}						<a href="javascript:;" onclick="						{if $zone.atid}							myMapper.update(								{ldelim}									zone:{$zone.atid}									{if $zone.points}										,									{/if}								{if $zone.points}									coords:[										{foreach from=$zone.points item=point name=point}												[{$point.x},{$point.y},												{ldelim}													label:'$<br>													<div class=q0>														<small>															{if isset($point.r)}																{#Respawn#}:																{if isset($point.r.h)} {$point.r.h}{#hr#}{/if}																{if isset($point.r.m)} {$point.r.m}{#min#}{/if}																{if isset($point.r.s)} {$point.r.s}{#sec#}{/if}															{else}																{#Waypoint#}															{/if}															{if isset($point.events)}<br>{$point.events|escape:"quotes"}{/if}														</small>													</div>',type:'{$point.type}'												{rdelim}]												{if !$smarty.foreach.point.last},{/if}										{/foreach}									]								{/if}								{rdelim});							ge('mapper-generic').style.display='block';						{else}							ge('mapper-generic').style.display='none';						{/if}								g_setSelectedLink(this, 'mapper'); return false" onmousedown="return false">							{$zone.name}</a>{if $zone.population > 1}&nbsp;({$zone.population}){/if}{if $smarty.foreach.zone.last}.{else}, {/if}					{/foreach}				</span></div>{/strip}
-				<div id="mapper-generic"></div>				{if ($npc.kill_rep_value1 or $npc.kill_rep_value2)}
+						<script type="text/javascript">Markup.printHtml("[minibox][img src=https://wow.zamimg.com/modelviewer/thumbs/npc/{$npc.model}.png]", "minibox");</script>
+					{/if}
+				{else}<br><div class="inputbox"><h1><b>{$npc.name}</b></h1><div id="inputbox-error"><br><span class=q10>This NPC doesn't exist in our database</span>.</div><!--  --></div><br>{/if}{if $npc.entry!=null}{if $npc.heroic}
+				<div>{if $npc.heroic.type == 1}{#This_is_heroic_NPC#}{else}{#This_is_normal_NPC#}{/if} <a href="?npc={$npc.heroic.entry}">{$npc.heroic.name}</a>.</div>
+				<div class="pad"></div>{/if}{if $npc.position}
+				<div>{#This_NPC_can_be_found_in#} {strip}<span id="locations">
+					{foreach from=$npc.position item=zone name=zone}
+						<a href="javascript:;" onclick="
+						{if $zone.atid}
+							myMapper.update(
+								{ldelim}
+									zone:{$zone.atid}
+									{if $zone.points}
+										,
+									{/if}
+								{if $zone.points}
+									coords:[
+										{foreach from=$zone.points item=point name=point}
+												[{$point.x},{$point.y},
+												{ldelim}
+													label:'$<br>
+													<div class=q0>
+														<small>
+															{if isset($point.r)}
+																{#Respawn#}:
+																{if isset($point.r.h)} {$point.r.h}{#hr#}{/if}
+																{if isset($point.r.m)} {$point.r.m}{#min#}{/if}
+																{if isset($point.r.s)} {$point.r.s}{#sec#}{/if}
+															{else}																{#Waypoint#}															{/if}															{if isset($point.events)}<br>{$point.events|escape:"quotes"}{/if}														</small>													</div>',type:'{$point.type}'												{rdelim}]												{if !$smarty.foreach.point.last},{/if}										{/foreach}									]								{/if}								{rdelim});							ge('mapper-generic').style.display='block';						{else}							ge('mapper-generic').style.display='none';						{/if}								g_setSelectedLink(this, 'mapper'); return false" onmousedown="return false">							{$zone.name}</a>{if $zone.population > 1}&nbsp;({$zone.population}){/if}{if $smarty.foreach.zone.last}.{else}, {/if}					{/foreach}				</span></div>{/strip}
+				<div id="mapper-generic"></div>
+				{if ($npc.kill_rep_value1 or $npc.kill_rep_value2)}
 					<div class="clear"></div>
 						<div><h3>{#Onkill#}: </h3>{strip}
 							{if $npc.kill_rep_value1}<li>{$npc.kill_rep_value1|string_format:"%+d"} {#reputationwith#} <a href="?faction={$npc.kill_rep_faction_id1}">{$npc.kill_rep_faction1}</a> {#until#} {$npc.kill_rep_until1}{/if}
