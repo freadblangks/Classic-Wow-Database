@@ -28,7 +28,7 @@ function add_loot(&$loot, $newloot)
 		if(isset($exist[$newitem['entry']]))
 		{
 			$loot[$exist[$item['entry']]]['mincount'] = min($loot[$exist[$item['entry']]]['mincount'], $newitem['mincount']);
-			$loot[$exist[$item['entry']]]['maxcount'] = max($loot[$exist[$item['entry']]]['maxcount'], $newitem['maxcount']);
+			$loot[$exist[$item['entry']]]['max_count'] = max($loot[$exist[$item['entry']]]['max_count'], $newitem['max_count']);
 			$loot[$exist[$item['entry']]]['percent'] += $newitem['percent'];
 			//$loot[$exist[$item['entry']]]['group'] = 0;
 		}
@@ -46,7 +46,7 @@ function loot($table, $lootid, $mod = 1)
 	$groups = array();
 	// Мего запрос :)
 	$rows = $DB->select('
-		SELECT l.ChanceOrQuestChance, l.mincountOrRef, l.maxcount, l.groupid, ?#, i.entry
+		SELECT l.ChanceOrQuestChance, l.mincountOrRef, l.max_count, l.groupid, ?#, i.entry
 			{, loc.name_loc?d AS name_loc}
 		FROM ?# l
 			LEFT JOIN (?_icons a, item_template i) ON l.item=i.entry AND a.id=i.displayid
@@ -77,13 +77,13 @@ function loot($table, $lootid, $mod = 1)
 		{
 			// Ссылка
 			if($row['mincountOrRef'] < 0)
-				add_loot($loot, loot('reference_loot_template', -$row['mincountOrRef'], abs($row['ChanceOrQuestChance']) / 100 * $row['maxcount'] * $mod));
+				add_loot($loot, loot('reference_loot_template', -$row['mincountOrRef'], abs($row['ChanceOrQuestChance']) / 100 * $row['max_count'] * $mod));
 			else
 				// Обыкновенный дроп
 				add_loot($loot, array(array_merge(array(
 						'percent'  => max(abs($row['ChanceOrQuestChance']) * $mod, 0)*sign($row['ChanceOrQuestChance']),
 						'mincount' => $row['mincountOrRef'],
-						'maxcount' => $row['maxcount'],
+						'max_count' => $row['max_count'],
 						'group' => $row['groupid']
 					),
 					iteminfo2($row, 0)
@@ -109,13 +109,13 @@ function loot($table, $lootid, $mod = 1)
 				// Ссылка
 				if($row['mincountOrRef'] < 0)
 				{
-					add_loot($loot, loot('reference_loot_template', -$row['mincountOrRef'], $chance / 100 * $row['maxcount'] * $mod));
+					add_loot($loot, loot('reference_loot_template', -$row['mincountOrRef'], $chance / 100 * $row['max_count'] * $mod));
 				}
 				else
 					add_loot($loot, array(array_merge(array(
 							'percent'  => $chance * $mod,
 							'mincount' => $row['mincountOrRef'],
-							'maxcount' => $row['maxcount'],
+							'max_count' => $row['max_count'],
 							'group' => $row['groupid']
 						),
 						iteminfo2($row, 0)
@@ -126,7 +126,7 @@ function loot($table, $lootid, $mod = 1)
 			{
 				$groups[$last_group][] = array_merge(array(
 						'mincount' => $row['mincountOrRef'],
-						'maxcount' => $row['maxcount'],
+						'max_count' => $row['max_count'],
 						'groupchance'=>$last_group_equal_chance * $mod,
 						'group' => $row['groupid']
 					),
@@ -161,7 +161,7 @@ function drop($table, $item)
 	$drop = array();
 	$curtable = 'reference_loot_template';
 	$rows = $DB->select('
-			SELECT entry, groupid, ChanceOrQuestChance, mincountOrRef, maxcount
+			SELECT entry, groupid, ChanceOrQuestChance, mincountOrRef, max_count
 			FROM ?#
 			WHERE
 				item = ?
@@ -181,7 +181,7 @@ function drop($table, $item)
 				$zerocount = 0;
 				$chancesum = 0;
 				$subrows = $DB->select('
-						SELECT ChanceOrQuestChance, mincountOrRef, maxcount
+						SELECT ChanceOrQuestChance, mincountOrRef, max_count
 						FROM ?#
 						WHERE entry = ? AND groupid = ?
 					',
@@ -201,15 +201,15 @@ function drop($table, $item)
 			$chance = max($chance, 0);
 			$chance = min($chance, 100);
 			$mincount = $row['mincountOrRef'];
-			$maxcount = $row['maxcount'];
+			$max_count = $row['max_count'];
 
 			if($mincount < 0)
 			{
 				// Референсная ссылка. Вероятность основывается на уже подсчитанной.
 				$num = $mincount;
 				$mincount = $drop[$num]['mincount'];
-				$chance = $chance * (1 - pow(1 - $drop[$num]['percent']/100, $maxcount));
-				$maxcount = $drop[$num]['maxcount']*$maxcount;
+				$chance = $chance * (1 - pow(1 - $drop[$num]['percent']/100, $max_count));
+				$max_count = $drop[$num]['max_count']*$max_count;
 			}
 
 			// Сохраняем подсчитанные для этих групп вероятности
@@ -219,18 +219,18 @@ function drop($table, $item)
 			{
 				// Этот же элемент уже падал в другой подгруппе - считаем общую вероятность.
 				$newmin =($drop[$num]['mincount'] < $mincount) ? $drop[$num]['mincount'] : $mincount;
-				$newmax = $drop[$num]['maxcount'] + $maxcount;
+				$newmax = $drop[$num]['max_count'] + $max_count;
 				$newchance = 100 - (100 - $drop[$num]['percent'])*(100-$chance)/100;
 				$drop[$num]['percent'] = $newchance;
 				$drop[$num]['mincount'] = $newmin;
-				$drop[$num]['maxcount'] = $newmax;
+				$drop[$num]['max_count'] = $newmax;
 			}
 			else
 			{
 				$drop[$num] = array();
 				$drop[$num]['percent'] = $chance;
 				$drop[$num]['mincount'] = $mincount;
-				$drop[$num]['maxcount'] = $maxcount;
+				$drop[$num]['max_count'] = $max_count;
 				$drop[$num]['checked'] = false;
 
 				if($AoWoWconf['limit'] > 0 && $num > 0 && ++$total > $AoWoWconf['limit'])
@@ -262,7 +262,7 @@ function drop($table, $item)
 					$drop[$i]['checked'] = false;
 
 				$rows = $DB->select('
-						SELECT entry, groupid, ChanceOrQuestChance, mincountOrRef, maxcount
+						SELECT entry, groupid, ChanceOrQuestChance, mincountOrRef, max_count
 						FROM ?#
 						WHERE
 							item = ?
@@ -281,7 +281,7 @@ function drop($table, $item)
 			// Есть непроверенный элемент, надо его проверить
 			$drop[$num]['checked'] = true;
 			$rows = $DB->select('
-					SELECT entry, groupid, ChanceOrQuestChance, mincountOrRef, maxcount
+					SELECT entry, groupid, ChanceOrQuestChance, mincountOrRef, max_count
 					FROM ?#
 					WHERE mincountOrRef = ?
 				',

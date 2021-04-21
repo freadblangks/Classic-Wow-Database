@@ -109,7 +109,7 @@ if(!$item = load_cache(5, $cache_key))
 
 	// Поиск вендеров, которые эту вещь продают
 	$rows_soldby = $DB->select('
-			SELECT ?#, c.entry, v.maxcount AS stock
+			SELECT ?#, c.entry, v.max_count AS stock
 			{
 				, l.name_loc?d AS name_loc
 				, l.subname_loc?d AS subname_loc
@@ -205,7 +205,7 @@ if(!$item = load_cache(5, $cache_key))
 		foreach($drops_cii as $lootid => $drop)
 		{
 			$rows = $DB->select('
-					SELECT c.?#, c.entry, maxcount
+					SELECT c.?#, c.entry, max_count
 					{ , l.name_loc?d AS name_loc }
 					FROM ?_icons, item_template c
 					{ LEFT JOIN (locales_item l) ON l.entry=c.entry AND ? }
@@ -312,7 +312,7 @@ if(!$item = load_cache(5, $cache_key))
 		foreach($drops_de as $lootid => $drop)
 		{
 			$rows = $DB->select('
-					SELECT c.?#, c.entry, maxcount
+					SELECT c.?#, c.entry, max_count
 					{
 						, l.name_loc?d AS name_loc
 					}
@@ -346,7 +346,7 @@ if(!$item = load_cache(5, $cache_key))
 	elseif($item['BagFamily'] > 0 and $item['ContainerSlots'] == 0)
 	{
 		$rows_cpi = $DB->select('
-				SELECT c.?#, c.entry, maxcount
+				SELECT c.?#, c.entry, max_count
 				{
 					, l.name_loc?d AS name_loc
 				}
