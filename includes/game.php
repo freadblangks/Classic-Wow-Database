@@ -46,10 +46,10 @@ function loot($table, $lootid, $mod = 1)
 	$groups = array();
 	// Мего запрос :)
 	$rows = $DB->select('
-		SELECT l.ChanceOrQuestChance, l.mincountOrRef, l.max_count, l.groupid, ?#, i.entry
+		SELECT l.ChanceOrQuestChance, l.mincountOrRef, l.maxcount, l.groupid, ?#, i.entry
 			{, loc.name_loc?d AS name_loc}
 		FROM ?# l
-			LEFT JOIN (?_icons a, item_template i) ON l.item=i.entry AND a.id=i.displayid
+			LEFT JOIN (?_icons a, item_template i) ON l.item=i.entry AND a.id=i.display_id
 			{LEFT JOIN (locales_item loc) ON loc.entry=i.entry AND ?d}
 		WHERE
 			l.entry=?d
@@ -161,7 +161,7 @@ function drop($table, $item)
 	$drop = array();
 	$curtable = 'reference_loot_template';
 	$rows = $DB->select('
-			SELECT entry, groupid, ChanceOrQuestChance, mincountOrRef, max_count
+			SELECT entry, groupid, ChanceOrQuestChance, mincountOrRef, maxcount
 			FROM ?#
 			WHERE
 				item = ?
@@ -262,7 +262,7 @@ function drop($table, $item)
 					$drop[$i]['checked'] = false;
 
 				$rows = $DB->select('
-						SELECT entry, groupid, ChanceOrQuestChance, mincountOrRef, max_count
+						SELECT entry, groupid, ChanceOrQuestChance, mincountOrRef, maxcount
 						FROM ?#
 						WHERE
 							item = ?

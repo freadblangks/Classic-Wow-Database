@@ -109,7 +109,7 @@ if(!$item = load_cache(5, $cache_key))
 
 	// Поиск вендеров, которые эту вещь продают
 	$rows_soldby = $DB->select('
-			SELECT ?#, c.entry, v.max_count AS stock
+			SELECT ?#, c.entry, v.maxcount AS stock
 			{
 				, l.name_loc?d AS name_loc
 				, l.subname_loc?d AS subname_loc
@@ -119,7 +119,7 @@ if(!$item = load_cache(5, $cache_key))
 			WHERE
 				v.item=?d
 				AND c.entry=v.entry
-				AND factiontemplateID=faction_A
+				AND factiontemplateID=faction 
 			ORDER BY 1 DESC, 2 DESC
 		',
 		$npc_cols['0'],
@@ -507,7 +507,7 @@ global $page;
 $page = array(
 	'Mapper' => false,
 	'Book' => false,
-	'Title' => $item['name'].' - '.$smarty->get_config_vars('Items'),
+	'Title' => $item['name'].' - '.$smarty->getconfigvars('Items'),
 	'tab' => 0,
 	'type' => 3,
 	'typeid' => $item['entry'],
