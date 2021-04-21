@@ -31,6 +31,7 @@ function creatureinfo2(&$Row)
 	$creature['tag'] = str_normalize($Row['subname']);
 	// Ранг NPC
 	$creature['classification'] = $Row['rank'];
+
 	return $creature;
 }
 

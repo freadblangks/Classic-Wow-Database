@@ -181,7 +181,7 @@ function drop($table, $item)
 				$zerocount = 0;
 				$chancesum = 0;
 				$subrows = $DB->select('
-						SELECT ChanceOrQuestChance, mincountOrRef, max_count
+						SELECT ChanceOrQuestChance, mincountOrRef, maxcount
 						FROM ?#
 						WHERE entry = ? AND groupid = ?
 					',
@@ -281,7 +281,7 @@ function drop($table, $item)
 			// Есть непроверенный элемент, надо его проверить
 			$drop[$num]['checked'] = true;
 			$rows = $DB->select('
-					SELECT entry, groupid, ChanceOrQuestChance, mincountOrRef, max_count
+					SELECT entry, groupid, ChanceOrQuestChance, mincountOrRef, maxcount
 					FROM ?#
 					WHERE mincountOrRef = ?
 				',
@@ -531,7 +531,7 @@ function position($id, $type, $spawnMask = 0)
 	global $smarty, $exdata, $zonedata, $DB, $AoWoWconf, $cached_images;
 
 	$data = $DB->select('
-			SELECT guid, map AS m, position_x AS x, position_y AS y, spawntimesecs, {MovementType AS ?#, }"0" AS `type`
+			SELECT guid, map AS m, position_x AS x, position_y AS y, spawntimesecsmin, spawntimesecsmax, {MovementType AS ?#, }"0" AS `type`
 			FROM '.$type.'
 			WHERE id = ?d
 			{ GROUP BY ROUND(x,?d), ROUND(y,?d) }
@@ -686,7 +686,7 @@ function getLocation($id, $type) {
     global $smarty, $exdata, $zonedata, $DB, $UDWBaseconf;
 
     $data = $DB->select('
-		SELECT guid, map AS m, position_x AS x, position_y AS y, spawntimesecs, {MovementType AS ?#, }"0" AS `type` FROM ' . $type . ' 
+		SELECT guid, map AS m, position_x AS x, position_y AS y, spawntimesecsmin, spawntimesecsmax, {Movement_Type AS ?#, }"0" AS `type` FROM ' . $type . ' 
 		WHERE id = ?d 
 		GROUP BY ROUND(x,?d), ROUND(y,?d) 
 		ORDER BY x,y

@@ -38,8 +38,8 @@ if(!$item = load_cache(5, $cache_key))
 				FROM ?_factiontemplate, creature_template c
 				{ LEFT JOIN (locales_creature l) ON l.entry=c.entry AND ? }
 				WHERE
-					lootid=?d
-					AND factiontemplateID=faction_A
+					loot_id=?d
+					AND factiontemplateID=faction
 				',
 				$npc_cols[0],
 				($_SESSION['locale']>0)? $_SESSION['locale']: DBSIMPLE_SKIP,
