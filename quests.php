@@ -3,7 +3,7 @@
 // Необходима функция questinfo
 require_once('includes/allquests.php');
 
-$smarty->config_load($conf_file, 'quest');
+$smarty->configload($conf_file, 'quest');
 
 // Разделяем из запроса класс и подкласс квестов
 @list($Type, $ZoneOrSort) = extract_values($podrazdel);

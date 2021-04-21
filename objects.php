@@ -1,6 +1,6 @@
 <?php
 
-$smarty->config_load($conf_file, 'object');
+$smarty->configload($conf_file, 'object');
 
 @list($type) = extract_values($podrazdel);
 

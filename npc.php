@@ -6,7 +6,7 @@ require_once('includes/allnpcs.php');
 require_once('includes/allcomments.php');
 
 // Настраиваем Smarty ;)
-$smarty->config_load($conf_file, 'npc');
+$smarty->configload($conf_file, 'npc');
 
 $id = intval($podrazdel);
 

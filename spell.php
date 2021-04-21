@@ -6,7 +6,7 @@ require_once('includes/allnpcs.php');
 require_once('includes/allquests.php');
 require_once('includes/allcomments.php');
 
-$smarty->config_load($conf_file, 'spell');
+$smarty->configload($conf_file, 'spell');
 
 // номер спелла;
 $id = intval($podrazdel);

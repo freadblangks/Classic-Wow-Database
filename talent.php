@@ -1,6 +1,6 @@
 <?php
 
-$smarty->config_load($conf_file, 'talent');
+$smarty->configload($conf_file, 'talent');
 
 global $page;
 $page = array(

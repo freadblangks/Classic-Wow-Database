@@ -3,7 +3,7 @@
 // Необходима функция creatureinfo
 require_once('includes/allnpcs.php');
 
-$smarty->config_load($conf_file, 'npc');
+$smarty->configload($conf_file, 'npc');
 
 @list($type) = extract_values($podrazdel);
 

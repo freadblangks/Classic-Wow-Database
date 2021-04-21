@@ -1,5 +1,5 @@
 <?php
-$smarty->config_load($conf_file, 'factions');
+$smarty->configload($conf_file, 'factions');
 
 @list($c1, $c2) = extract_values($podrazdel);
 

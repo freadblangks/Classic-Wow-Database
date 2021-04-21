@@ -5,7 +5,7 @@ require_once('includes/allitems.php');
 require_once('includes/allcomments.php');
 require_once('includes/allquests.php');
 
-$smarty->config_load($conf_file, 'object');
+$smarty->configload($conf_file, 'object');
 
 // номер объекта;
 $id = intval($podrazdel);

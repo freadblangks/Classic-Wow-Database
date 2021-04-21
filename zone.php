@@ -4,7 +4,7 @@ require_once('includes/game.php');
 require_once('includes/allitems.php');
 require_once('includes/allcomments.php');
 //require_once('includes/allscreenshots.php');
-$smarty->config_load($conf_file, 'zone');
+$smarty->configload($conf_file, 'zone');
 
 $id = $podrazdel;
 

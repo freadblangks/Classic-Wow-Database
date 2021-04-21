@@ -2,7 +2,7 @@
 
 require_once('includes/allspells.php');
 
-$smarty->config_load($conf_file, 'spell');
+$smarty->configload($conf_file, 'spell');
 
 @list($s1, $s2, $s3) = extract_values($podrazdel);
 

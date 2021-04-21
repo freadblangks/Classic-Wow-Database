@@ -2,7 +2,7 @@
 
 require_once('includes/allitemsets.php');
 
-$smarty->config_load($conf_file, 'itemset');
+$smarty->configload($conf_file, 'itemset');
 
 $cache_key = cache_key();
 

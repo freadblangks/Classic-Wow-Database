@@ -3,7 +3,7 @@ require_once('includes/allitems.php');
 require_once('includes/allspells.php');
 require_once('includes/allcomments.php');
 
-$smarty->config_load($conf_file, 'itemset');
+$smarty->configload($conf_file, 'itemset');
 
 $id = intval($podrazdel);
 

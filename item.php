@@ -9,7 +9,7 @@ require_once('includes/allobjects.php');
 require_once('includes/allcomments.php');
 
 // Загружаем файл перевода для smarty
-$smarty->config_load($conf_file, 'item');
+$smarty->configload($conf_file, 'item');
 
 $id = intval($podrazdel);
 

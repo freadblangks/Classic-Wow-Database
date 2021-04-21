@@ -1,6 +1,6 @@
 <?php
 
-$smarty->config_load($conf_file, 'maps');
+$smarty->configload($conf_file, 'maps');
 
 global $page;
 $page = array(

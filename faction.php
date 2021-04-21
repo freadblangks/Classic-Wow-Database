@@ -5,7 +5,7 @@ require_once('includes/allitems.php');
 require_once('includes/allquests.php');
 require_once('includes/allcomments.php');
 
-$smarty->config_load($conf_file, 'faction');
+$smarty->configload($conf_file, 'faction');
 
 // Номер фракции
 $id = intval($podrazdel);

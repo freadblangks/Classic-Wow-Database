@@ -9,7 +9,7 @@ require_once('includes/allnpcs.php');
 require_once('includes/allobjects.php');
 
 // Настраиваем Smarty ;)
-$smarty->config_load($conf_file, 'search');
+$smarty->configload($conf_file, 'search');
 
 // Строка поиска:
 $search = urldecode($podrazdel);

@@ -7,7 +7,7 @@ require_once('includes/allnpcs.php');
 require_once('includes/allitems.php');
 require_once('includes/allcomments.php');
 
-$smarty->config_load($conf_file, 'quest');
+$smarty->configload($conf_file, 'quest');
 
 // Номер квеста
 $id = intval($podrazdel);
