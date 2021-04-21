@@ -1,6 +1,6 @@
 <?php
 /**
- * DbSimple_Mysql: MySQL database.
+ * DbSimple_Mssql: Mssql database.
  * (C) Dk Lab, http://en.dklab.ru
  *
  * This library is free software; you can redistribute it and/or
@@ -13,64 +13,60 @@
  *
  * @author Dmitry Koterov, http://forum.dklab.ru/users/DmitryKoterov/
  * @author Konstantin Zhinko, http://forum.dklab.ru/users/KonstantinGinkoTit/
- * 
- * @version 2.x $Id$
+ *
+ * @version 2.x $Id: Mssql.php 163 2007-01-10 09:47:49Z dk $
  */
 require_once dirname(__FILE__) . '/Generic.php';
 
 
 /**
- * Database class for MySQL.
+ * Database class for Mssql.
  */
-class DbSimple_Mysql extends DbSimple_Generic_Database
+class DbSimple_Mssql extends DbSimple_Database
 {
     var $link;
 
     /**
      * constructor(string $dsn)
-     * Connect to MySQL.
+     * Connect to Mssql.
      */
-    function DbSimple_Mysql($dsn)
+    function DbSimple_Mssql($dsn)
     {
-        $p = DbSimple_Generic::parseDSN($dsn);
-        if (!is_callable('mysql_connect')) {
-            return $this->_setLastError("-1", "MySQL extension is not loaded", "mysql_connect");
+        if (!is_callable('mssql_connect')) {
+            return $this->_setLastError("-1", "Mssql extension is not loaded", "mssql_connect");
         }
-        $ok = $this->link = @mysql_connect(
-            $str = $p['host'] . (empty($p['port'])? "" : ":" . $p['port']),
-            $p['user'],
-            $p['pass'],
+        $ok = $this->link = @mssql_connect(
+            $dsn['host'] . (empty($dsn['port'])? "" : ":".$dsn['port']),
+            $dsn['user'],
+            $dsn['pass'],
             true
         );
         $this->_resetLastError();
-        if (!$ok) return $this->_setDbError('mysql_connect("' . $str . '", "' . $p['user'] . '")');
-        $ok = @mysql_select_db(preg_replace('{^/}s', '', $p['path']), $this->link);
-        if (!$ok) return $this->_setDbError('mysql_select_db()');
-        if (isset($p["charset"])) {
-            $this->query('SET NAMES ?', $p["charset"]);
-        }
+        if (!$ok) return $this->_setDbError('mssql_connect()');
+        $ok = @mssql_select_db(preg_replace('{^/}s', '', $p['path']), $this->link);
+        if (!$ok) return $this->_setDbError('mssql_select_db()');
     }
 
 
     function _performEscape($s, $isIdent=false)
     {
         if (!$isIdent) {
-            return "'" . mysql_real_escape_string($s, $this->link) . "'";
+            return "'" . str_replace("'", "''", $s) . "'";
         } else {
-            return "`" . str_replace('`', '``', $s) . "`";
+            return str_replace(array('[',']'), '', $s);
         }
     }
 
 
     function _performTransaction($parameters=null)
     {
-        return $this->query('BEGIN');
+        return $this->query('BEGIN TRANSACTION');
     }
 
 
-    function& _performNewBlob($blobid=null)
+    function _performNewBlob($blobid=null)
     {
-        $obj = new DbSimple_Mysql_Blob($this, $blobid);
+        $obj = new DbSimple_Mssql_Blob($this, $blobid);
         return $obj;
     }
 
@@ -78,9 +74,9 @@ class DbSimple_Mysql extends DbSimple_Generic_Database
     function _performGetBlobFieldNames($result)
     {
         $blobFields = array();
-        for ($i=mysql_num_fields($result)-1; $i>=0; $i--) {
-            $type = mysql_field_type($result, $i); 
-            if (strpos($type, "BLOB") !== false) $blobFields[] = mysql_field_name($result, $i);
+        for ($i=mssql_num_fields($result)-1; $i>=0; $i--) {
+            $type = mssql_field_type($result, $i);
+            if (strpos($type, "BLOB") !== false) $blobFields[] = mssql_field_name($result, $i);
         }
         return $blobFields;
     }
@@ -99,13 +95,13 @@ class DbSimple_Mysql extends DbSimple_Generic_Database
 
     function _performCommit()
     {
-        return $this->query('COMMIT');
+        return $this->query('COMMIT TRANSACTION');
     }
 
 
     function _performRollback()
     {
-        return $this->query('ROLLBACK');
+        return $this->query('ROLLBACK TRANSACTION');
     }
 
 
@@ -122,7 +118,7 @@ class DbSimple_Mysql extends DbSimple_Generic_Database
                     }
                 }
                 return true;
-        
+
             // Perform total calculation.
             case 'GET_TOTAL':
                 // Built-in calculation available?
@@ -133,7 +129,7 @@ class DbSimple_Mysql extends DbSimple_Generic_Database
                 // TODO: GROUP BY ... -> COUNT(DISTINCT ...)
                 $re = '/^
                     (?> -- [^\r\n]* | \s+)*
-                    (\s* SELECT \s+)                                      #1     
+                    (\s* SELECT \s+)                                      #1
                     (.*?)                                                 #2
                     (\s+ FROM \s+ .*?)                                    #3
                         ((?:\s+ ORDER \s+ BY \s+ .*?)?)                   #4
@@ -142,12 +138,12 @@ class DbSimple_Mysql extends DbSimple_Generic_Database
                 $m = null;
                 if (preg_match($re, $queryMain[0], $m)) {
                     $query[0] = $m[1] . $this->_fieldList2Count($m[2]) . " AS C" . $m[3];
-                    $skipTail = substr_count($m[4] . $m[5], '?'); 
+                    $skipTail = substr_count($m[4] . $m[5], '?');
                     if ($skipTail) array_splice($query, -$skipTail);
                 }
                 return true;
         }
-        
+
         return false;
     }
 
@@ -156,54 +152,68 @@ class DbSimple_Mysql extends DbSimple_Generic_Database
     {
         $this->_lastQuery = $queryMain;
         $this->_expandPlaceholders($queryMain, false);
-        $result = @mysql_query($queryMain[0], $this->link);
-        if ($result === false) return $this->_setDbError($queryMain[0]);
+
+        $result = mssql_query($queryMain[0], $this->link);
+
+        if ($result === false) {
+            return $this->_setDbError($queryMain[0]);
+        }
+
         if (!is_resource($result)) {
+
             if (preg_match('/^\s* INSERT \s+/six', $queryMain[0])) {
                 // INSERT queries return generated ID.
-                return @mysql_insert_id($this->link);
+                $result = mssql_fetch_assoc(mssql_query("SELECT SCOPE_IDENTITY() AS insert_id", $this->link));
+                return isset($result['insert_id']) ? $result['insert_id'] : true;
             }
+
             // Non-SELECT queries return number of affected rows, SELECT - resource.
-            return @mysql_affected_rows($this->link);
+            if (function_exists('mssql_affected_rows')) {
+                return mssql_affected_rows($this->link);
+            } elseif (function_exists('mssql_rows_affected')) {
+                return mssql_rows_affected($this->link);
+            }
         }
         return $result;
     }
 
-    
+
     function _performFetch($result)
     {
-        $row = @mysql_fetch_assoc($result);
-        if (mysql_error()) return $this->_setDbError($this->_lastQuery);
-        if ($row === false) return null;        
+        $row = mssql_fetch_assoc($result);
+        //if (mssql_error()) return $this->_setDbError($this->_lastQuery);
+        if ($row === false) return null;
+
+        // mssql bugfix - replase ' ' to ''
+        if (is_array($row)) {
+            foreach ($row as $k => $v) {
+                if ($v === ' ') $row[$k] = '';
+            }
+        }
         return $row;
     }
-    
-    
-    function _setDbError($query)
+
+
+    function _setDbError($query, $errors = null)
     {
-    	if ($this->link) {
-	        return $this->_setLastError(mysql_errno($this->link), mysql_error($this->link), $query);
-	    } else {
-	        return $this->_setLastError(mysql_errno(), mysql_error(), $query);
-	    }
+        return $this->_setLastError('Error! ', mssql_get_last_message() . strip_tags($errors), $query);
     }
-    
-    
+
+
     function _calcFoundRowsAvailable()
     {
-        $ok = version_compare(mysql_get_server_info($this->link), '4.0') >= 0;
-        return $ok;
+        return false;
     }
 }
 
 
-class DbSimple_Mysql_Blob extends DbSimple_Generic_Blob
+class DbSimple_Mssql_Blob extends DbSimple_Generic_Blob
 {
-    // MySQL does not support separate BLOB fetching. 
+    // Mssql does not support separate BLOB fetching.
     var $blobdata = null;
-    var $curSeek = 0;
+    var $curSeek  = 0;
 
-    function DbSimple_Mysql_Blob(&$database, $blobdata=null)
+    function DbSimple_Mssql_Blob(&$database, $blobdata=null)
     {
         $this->blobdata = $blobdata;
         $this->curSeek = 0;
