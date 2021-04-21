@@ -308,8 +308,10 @@ function transform_point($at, $point)
 
 	$result['x'] = round(100 - ($point['y']-$at['y_min']) / (($at['y_max']-$at['y_min']) / 100), 2);
 	$result['y'] = round(100 - ($point['x']-$at['x_min']) / (($at['x_max']-$at['x_min']) / 100), 2);
-	$result['r'] = sec_to_time($point['spawntimesecs']);
-	unset($result['spawntimesecs']);
+	$result['rmin'] = sec_to_time($point['spawntimesecsmin']);
+	$result['rmax'] = sec_to_time($point['spawntimesecsmax']);
+	unset($result['spawntimesecsmin']);
+	unset($result['spawntimesecsmax']);
 
 	return $result;
 }

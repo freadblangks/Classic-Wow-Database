@@ -65,12 +65,19 @@
 													label:'$<br>
 													<div class=q0>
 														<small>
-															{if isset($point.r)}
+															{if isset($point.rmin)}
 																{#Respawn#}:
-																{if isset($point.r.h)} {$point.r.h}{#hr#}{/if}
-																{if isset($point.r.m)} {$point.r.m}{#min#}{/if}
-																{if isset($point.r.s)} {$point.r.s}{#sec#}{/if}
-															{else}																{#Waypoint#}															{/if}															{if isset($point.events)}<br>{$point.events|escape:"quotes"}{/if}														</small>													</div>',type:'{$point.type}'												{rdelim}]												{if !$smarty.foreach.point.last},{/if}										{/foreach}									]								{/if}								{rdelim});							ge('mapper-generic').style.display='block';						{else}							ge('mapper-generic').style.display='none';						{/if}								g_setSelectedLink(this, 'mapper'); return false" onmousedown="return false">							{$zone.name}</a>{if $zone.population > 1}&nbsp;({$zone.population}){/if}{if $smarty.foreach.zone.last}.{else}, {/if}					{/foreach}				</span></div>{/strip}
+																{if isset($point.rmin.h)} {$point.rmin.h}{#hr#}{/if}
+																{if isset($point.rmin.m)} {$point.rmin.m}{#min#}{/if}
+																{if isset($point.rmin.s)} {$point.rmin.s}{#sec#}{/if}
+																{if isset($point.rmax)}	
+																	&nbsp;to
+																	{if isset($point.rmax.h)} {$point.rmax.h}{#hr#}{/if}
+																	{if isset($point.rmax.m)} {$point.rmax.m}{#min#}{/if}
+																	{if isset($point.rmax.s)} {$point.rmax.s}{#sec#}{/if}
+																{/if}
+															{else}
+																{#Waypoint#}															{/if}															{if isset($point.events)}<br>{$point.events|escape:"quotes"}{/if}														</small>													</div>',type:'{$point.type}'												{rdelim}]												{if !$smarty.foreach.point.last},{/if}										{/foreach}									]								{/if}								{rdelim});							ge('mapper-generic').style.display='block';						{else}							ge('mapper-generic').style.display='none';						{/if}								g_setSelectedLink(this, 'mapper'); return false" onmousedown="return false">							{$zone.name}</a>{if $zone.population > 1}&nbsp;({$zone.population}){/if}{if $smarty.foreach.zone.last}.{else}, {/if}					{/foreach}				</span></div>{/strip}
 				<div id="mapper-generic"></div>
 				{if ($npc.kill_rep_value1 or $npc.kill_rep_value2)}
 					<div class="clear"></div>
