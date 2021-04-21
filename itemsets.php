@@ -31,7 +31,7 @@ global $page;
 $page = array(
 	'Mapper' => false,
 	'Book' => false,
-	'Title' => $smarty->get_config_vars('Item_Sets'),
+	'Title' => $smarty->getconfigvars('Item_Sets'),
 	'tab' => 0,
 	'type' => 0,
 	'typeid' => 0,

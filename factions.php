@@ -53,7 +53,7 @@ if(!$factions = load_cache(19, $cache_key))
 
 global $page;
 $page = array(
-	'Title' => $smarty->get_config_vars('Factions'),
+	'Title' => $smarty->getconfigvars('Factions'),
 	'tab' => 0,
 	'type' => 0,
 	'typeid' => 0,

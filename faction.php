@@ -60,8 +60,8 @@ if(!$faction = load_cache(18, $cache_key))
 			SELECT ?#, entry
 			FROM item_template i, ?_icons a
 			WHERE
-				i.RequiredReputationFaction=?d
-				AND a.id=i.displayid
+				i.Required_Reputation_Faction=?d
+				AND a.id=i.display_id
 			',
 			$item_cols[2],
 			$id
@@ -80,8 +80,8 @@ if(!$faction = load_cache(18, $cache_key))
 			SELECT ?#, entry
 			FROM creature_template, ?_factiontemplate
 			WHERE
-				faction_A IN (SELECT factiontemplateID FROM ?_factiontemplate WHERE factionID=?d)
-				AND factiontemplateID=faction_A
+				faction IN (SELECT factiontemplateID FROM ?_factiontemplate WHERE factionID=?d)
+				AND factiontemplateID=faction
 			',
 			$npc_cols[0],
 			$id
@@ -123,7 +123,7 @@ if(!$faction = load_cache(18, $cache_key))
 $page = array(
 	'Mapper' => false,
 	'Book' => false,
-	'Title' => $faction['name'].' - '.$smarty->get_config_vars('Factions'),
+	'Title' => $faction['name'].' - '.$smarty->getconfigvars('Factions'),
 	'tab' => 0,
 	'type' => 8,
 	'typeid' => $faction['entry'],

@@ -68,7 +68,7 @@ global $page;
 $page = array(
 	'Mapper' => false,
 	'Book' => false,
-	'Title' => $itemset['name'].' - '.$smarty->get_config_vars('Item_Sets'),
+	'Title' => $itemset['name'].' - '.$smarty->getconfigvars('Item_Sets'),
 	'tab' => 0,
 	'type' => 4,
 	'typeid' => $itemset['entry'],

@@ -286,7 +286,7 @@ if(!$spell = load_cache(13, $cache_key))
 				{ LEFT JOIN (locales_creature l) ON c.entry = l.entry AND ? }
 				WHERE
 					c.entry IN (?a)
-					AND factiontemplateID=faction_A
+					AND factiontemplateID=faction
 				',
 				$npc_cols[0],
 				($_SESSION['locale']>0)? $_SESSION['locale']: DBSIMPLE_SKIP,

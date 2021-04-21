@@ -18,7 +18,7 @@
 						<ul>
 							{if $itemset.note} <li><div>{$itemset.note}</div></li>{/if}
 							{if $itemset.class} <li><div>{#Class#}: {$itemset.class}{/if}
-							<li><div>{#Level#}: {$itemset.minlevel}{if $itemset.minlevel!=$itemset.maxlevel - {$itemset.maxlevel}{/if}</div></li>
+							<li><div>{#Level#}: {$itemset.minlevel}{if $itemset.minlevel!=$itemset.maxlevel} - {$itemset.maxlevel}{/if}</div></li>
 							{if $user.roles == 5}<li><div><a href="?admin.editarticle=5.{$itemset.entry}">Troll</a></div></li>{/if}
 							{if $itemset.Aflags & 2}<li><div>{#Not_Available_to_Players#}</div></li>{/if}
 							{if $itemset.Aflags & 8}<li><div>{#No_Longer_Available_to_Players#}</div></li>{/if} 
