@@ -60,11 +60,18 @@
 												{ldelim}
 													label:'$<br>
 													<div class=q0>
-														<small>{#Respawn#}:
-															{if isset($point.r.h)} {$point.r.h}{#hr#}{/if}
-															{if isset($point.r.m)} {$point.r.m}{#min#}{/if}
-															{if isset($point.r.s)} {$point.r.s}{#sec#}{/if}
+														<small>{if isset($point.rmin)}{#Respawn#}:
+															{if isset($point.rmin.h)} {$point.rmin.h}{#hr#}{/if}
+															{if isset($point.rmin.m)} {$point.rmin.m}{#min#}{/if}
+															{if isset($point.rmin.s)} {$point.rmin.s}{#sec#}{/if}
+															{if isset($point.rmax)}	
+																&nbsp;to
+																{if isset($point.rmax.h)} {$point.rmax.h}{#hr#}{/if}
+																{if isset($point.rmax.m)} {$point.rmax.m}{#min#}{/if}
+																{if isset($point.rmax.s)} {$point.rmax.s}{#sec#}{/if}
+															{/if}
 															{if isset($point.events)}<br>{$point.events|escape:"quotes"}{/if}
+														{/if}
 														</small>
 													</div>',type:'{$point.type}'
 												{rdelim}]
