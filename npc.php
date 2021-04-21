@@ -34,7 +34,7 @@ if(!$npc = load_cache(1, $cache_key))
 		}
 		WHERE
 			c.entry = ?
-			AND ft.factiontemplateID = c.faction_A
+			AND ft.factiontemplateID = c.faction
 			AND f.factionID = ft.factionID
 		LIMIT 1
 			',
@@ -57,12 +57,12 @@ if(!$npc = load_cache(1, $cache_key))
         $npc['mindmg'] = ($row['mindmg'] /* + $row['attackpower'] */) * $row['dmg_multiplier'];
         $npc['maxdmg'] = ($row['maxdmg'] /* + $row['attackpower'] */) * $row['dmg_multiplier'];
 		
-		$toDiv = array('minhealth', 'maxmana', 'minmana', 'maxhealth', 'armor', 'mindmg', 'maxdmg');
+		$toDiv = array('health_min', 'mana_max', 'mana_min', 'health_max', 'armor', 'dmg_min', 'dmg_max');
 		// Разделяем на тысячи (ххххххххх => ххх,ххх,ххх)
 		foreach($toDiv as $e)
 			$npc[$e] = number_format($npc[$e]);
 
-		$npc['rank'] = $smarty->get_config_vars('rank'.$npc['rank']);
+		$npc['rank'] = $smarty->getconfigvars('rank'.$npc['rank']);
 		// faction_A = faction_H
 		$npc['faction_num'] = $row['factionID'];
 		$npc['faction'] = $row['faction-name'];
@@ -90,11 +90,11 @@ if(!$npc = load_cache(1, $cache_key))
 		for($j=1;$j<4;$j++)
 		{
 			$tmp2 = $DB->select('
-				SELECT action?d_param1
+				SELECT datalong
 				FROM creature_ai_scripts
 				WHERE
-					creature_id=?d
-					AND action?d_type=11
+					id=?d
+					AND command=15
 				',
 				$j,
 				$npc['entry'],
@@ -181,14 +181,14 @@ if(!$npc = load_cache(1, $cache_key))
 
 		// Продает:
 		$rows_s = $DB->select('
-			SELECT ?#, i.entry, i.maxcount, n.`maxcount` as `drop-maxcount`
+			SELECT ?#, i.entry, i.max_count, n.`maxcount` as `drop-maxcount`
 				{, l.name_loc?d AS `name_loc`}
 			FROM npc_vendor n, ?_icons, item_template i
 				{LEFT JOIN (locales_item l) ON l.entry=i.entry AND ?d}
 			WHERE
 				n.entry=?
 				AND i.entry=n.item
-				AND id=i.displayid
+				AND id=i.display_id
 			',
 			$item_cols[2],
 			($_SESSION['locale'])? $_SESSION['locale']: DBSIMPLE_SKIP,
@@ -303,7 +303,7 @@ global $page;
 $page = array(
 	'Mapper' => true,
 	'Book' => false,
-	'Title' => $npc['name'].' - '.$smarty->get_config_vars('NPCs'),
+	'Title' => $npc['name'].' - '.$smarty->getconfigvars('NPCs'),
 	'tab' => 0,
 	'type' => 1,
 	'typeid' => $npc['entry'],

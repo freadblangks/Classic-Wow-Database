@@ -531,7 +531,7 @@ function position($id, $type, $spawnMask = 0)
 	global $smarty, $exdata, $zonedata, $DB, $AoWoWconf, $cached_images;
 
 	$data = $DB->select('
-			SELECT guid, map AS m, position_x AS x, position_y AS y, spawntimesecsmin, spawntimesecsmax, {MovementType AS ?#, }"0" AS `type`
+			SELECT guid, map AS m, position_x AS x, position_y AS y, spawntimesecsmin, spawntimesecsmax, {Movement_Type AS ?#, }"0" AS `type`
 			FROM '.$type.'
 			WHERE id = ?d
 			{ GROUP BY ROUND(x,?d), ROUND(y,?d) }
