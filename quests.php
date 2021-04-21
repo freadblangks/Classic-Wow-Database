@@ -42,11 +42,12 @@ if(!$quests = load_cache(12, $cache_key))
 
 	save_cache(12, $cache_key, $quests);
 }
+
 global $page;
 $page = array(
 	'Mapper' => false,
 	'Book' => false,
-	'Title' => $smarty->get_config_vars('Quests'),
+	'Title' => $smarty->getconfigvars('Quests'),
 	'tab' => 0,
 	'type' => 0,
 	'typeid' => 0,

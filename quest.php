@@ -375,7 +375,7 @@ if(!$quest = load_cache(10, $cache_key))
 		WHERE
 			q.quest=?d
 			AND c.entry=q.id
-			AND factiontemplateID=c.faction_A
+			AND factiontemplateID=c.faction
 		',
 		($_SESSION['locale']>0)? $_SESSION['locale']: DBSIMPLE_SKIP,
 		($_SESSION['locale']>0)? 1: DBSIMPLE_SKIP,
@@ -426,8 +426,8 @@ if(!$quest = load_cache(10, $cache_key))
 		FROM ?_icons a, item_template i
 			{LEFT JOIN (locales_item l) ON l.entry=i.entry AND ?}
 		WHERE
-			startquest = ?d
-			AND id = displayid
+			start_quest = ?d
+			AND id = display_id
 		',
 		($_SESSION['locale']>0)? $_SESSION['locale']: DBSIMPLE_SKIP,
 		($_SESSION['locale']>0)? 1: DBSIMPLE_SKIP,
@@ -454,7 +454,7 @@ if(!$quest = load_cache(10, $cache_key))
 		WHERE
 			q.quest=?d
 			AND c.entry=q.id
-			AND factiontemplateID=c.faction_A
+			AND factiontemplateID=c.faction
 		',
 		($_SESSION['locale']>0)? $_SESSION['locale']: DBSIMPLE_SKIP,
 		($_SESSION['locale']>0)? 1: DBSIMPLE_SKIP,
@@ -514,7 +514,7 @@ global $page;
 $page = array(
 	'Mapper' => false,
 	'Book' => false,
-	'Title' => $quest['Title'].' - '.$smarty->get_config_vars('Quests'),
+	'Title' => $quest['Title'].' - '.$smarty->getconfigvars('Quests'),
 	'tab' => 0,
 	'type' => 5,
 	'typeid' => $quest['entry'],
