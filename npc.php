@@ -71,16 +71,16 @@ if(!$npc = load_cache(1, $cache_key))
 		$npc = array_merge($npc, money2coins($money));
 
 		// Дроп
-		$lootid=$row['lootid'];
+		$loot_id=$row['loot_id'];
 		// Используемые спеллы
 		$npc['ablities'] = array();
 		$tmp = array();
 		for($j=0;$j<=4;++$j)
 		{
-			if($row['spell'.$j] && !in_array($row['spell'.$j], $tmp))
+			if($row['spell_id'.$j] && !in_array($row['spell_id'.$j], $tmp))
 			{
-				$tmp[] = $row['spell'.$j];
-				if($data = spellinfo($row['spell'.$j], 0))
+				$tmp[] = $row['spell_id'.$j];
+				if($data = spellinfo($row['spell_id'.$j], 0))
 				{
 					if($data['name'])
 						$npc['abilities'][] = $data;
@@ -215,15 +215,15 @@ if(!$npc = load_cache(1, $cache_key))
 		unset ($rows_s);
 
 		// Дроп
-		if(!($npc['drop'] = loot('creature_loot_template', $lootid)))
+		if(!($npc['drop'] = loot('creature_loot_template', $loot_id)))
 			unset ($npc['drop']);
 
 		// Кожа
-		if(!($npc['skinning'] = loot('skinning_loot_template', $lootid)))
+		if(!($npc['skinning'] = loot('skinning_loot_template', $loot_id)))
 			unset ($npc['skinning']);
 
 		// Воруеццо
-		if(!($npc['pickpocketing'] = loot('pickpocketing_loot_template', $lootid)))
+		if(!($npc['pickpocketing'] = loot('pickpocketing_loot_template', $loot_id)))
 			unset ($npc['pickpocketing']);
 
 		// Начиниают квесты...

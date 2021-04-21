@@ -581,7 +581,7 @@ function iteminfo2(&$Row, $level=0)
 	}
 	// Armor
 	$item['armor'] = $Row['armor'];
-	$item['slot'] = $Row['InventoryType'];
+	$item['slot'] = $Row['Inventory_Type'];
 	// Bag
 	if($Row['class']==1)
 		$item['slots'] = $Row['ContainerSlots'];
