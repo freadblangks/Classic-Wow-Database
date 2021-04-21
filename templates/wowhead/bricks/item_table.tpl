@@ -50,9 +50,9 @@ new Listview(
 		{* Подкласс вещи, обязательно *}
 			subclass:{$item.subclass},
 		{* Кол-во вещей при дропе *}
-		{if isset($item.maxcount)}
-			{if $item.maxcount>1}
-				stack:[{$item.mincount},{$item.maxcount}],
+		{if isset($item.max_count)}
+			{if $item.max_count>1}
+				stack:[{$item.min_count},{$item.max_count}],
 			{/if}
 		{/if}
 		{* Процент дропа *}
