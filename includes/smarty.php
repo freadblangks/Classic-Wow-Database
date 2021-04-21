@@ -8,19 +8,21 @@ global $AoWoWconf;
 $cwd = str_replace("\\", "/", getcwd());
 
 // загружаем библиотеку Smarty
-require_once('includes/Smarty-2.6.26/libs/Smarty.class.php');
+require_once('includes/Smarty-3.1.39/libs/Smarty.class.php');
 class Smarty_AoWoW extends Smarty
 {
 		function Smarty_AoWoW()
 		{
 			global $cwd;
 			global $AoWoWconf;
-			$this->Smarty();
+
+			parent::__construct();//parent::Smarty(); //$this->Smarty();
+
 			// Папки с шаблонами, кэшом шаблонов и настройками
-			$this->template_dir = $cwd.'/templates/'.$AoWoWconf['aowow']['template'].'/';
-			$this->compile_dir = $cwd.'/cache/templates/'.$AoWoWconf['aowow']['template'].'/';
-			$this->config_dir = $cwd.'/configs/';
-			$this->cache_dir = $cwd.'/cache/';
+			$this->setTemplateDir($cwd.'/templates/'.$AoWoWconf['aowow']['template'].'/');
+			$this->setCompileDir($cwd.'/cache/templates/'.$AoWoWconf['aowow']['template'].'/');
+			$this->setConfigDir($cwd.'/configs/');
+			$this->setCacheDir($cwd.'/cache/');
 			// Режим отладки
 			$this->debugging = $AoWoWconf['debug'];
 			// Разделители
