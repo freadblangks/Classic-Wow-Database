@@ -1,7 +1,7 @@
 <?php
 
 // Загружаем файл перевода для smarty
-$smarty->config_load($conf_file, 'account');
+$smarty->configload($conf_file, 'account');
 
 // Создание аккаунта
 if($_REQUEST['account'] == 'signup' && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['c_password']) && $AoWoWconf['register'] == true)

@@ -9,7 +9,7 @@ require_once('includes/allobjects.php');
 require_once('includes/allcomments.php');
 
 // Загружаем файл перевода для smarty
-$smarty->config_load($conf_file, 'item');
+$smarty->configload($conf_file, 'item');
 
 $id = intval($podrazdel);
 
@@ -38,8 +38,8 @@ if(!$item = load_cache(5, $cache_key))
 				FROM ?_factiontemplate, creature_template c
 				{ LEFT JOIN (locales_creature l) ON l.entry=c.entry AND ? }
 				WHERE
-					lootid=?d
-					AND factiontemplateID=faction_A
+					loot_id=?d
+					AND factiontemplateID=faction
 				',
 				$npc_cols[0],
 				($_SESSION['locale']>0)? $_SESSION['locale']: DBSIMPLE_SKIP,
@@ -119,7 +119,7 @@ if(!$item = load_cache(5, $cache_key))
 			WHERE
 				v.item=?d
 				AND c.entry=v.entry
-				AND factiontemplateID=faction_A
+				AND factiontemplateID=faction 
 			ORDER BY 1 DESC, 2 DESC
 		',
 		$npc_cols['0'],
@@ -205,7 +205,7 @@ if(!$item = load_cache(5, $cache_key))
 		foreach($drops_cii as $lootid => $drop)
 		{
 			$rows = $DB->select('
-					SELECT c.?#, c.entry, maxcount
+					SELECT c.?#, c.entry, max_count
 					{ , l.name_loc?d AS name_loc }
 					FROM ?_icons, item_template c
 					{ LEFT JOIN (locales_item l) ON l.entry=c.entry AND ? }
@@ -312,7 +312,7 @@ if(!$item = load_cache(5, $cache_key))
 		foreach($drops_de as $lootid => $drop)
 		{
 			$rows = $DB->select('
-					SELECT c.?#, c.entry, maxcount
+					SELECT c.?#, c.entry, max_count
 					{
 						, l.name_loc?d AS name_loc
 					}
@@ -346,7 +346,7 @@ if(!$item = load_cache(5, $cache_key))
 	elseif($item['BagFamily'] > 0 and $item['ContainerSlots'] == 0)
 	{
 		$rows_cpi = $DB->select('
-				SELECT c.?#, c.entry, maxcount
+				SELECT c.?#, c.entry, max_count
 				{
 					, l.name_loc?d AS name_loc
 				}
@@ -507,7 +507,7 @@ global $page;
 $page = array(
 	'Mapper' => false,
 	'Book' => false,
-	'Title' => $item['name'].' - '.$smarty->get_config_vars('Items'),
+	'Title' => $item['name'].' - '.$smarty->getconfigvars('Items'),
 	'tab' => 0,
 	'type' => 3,
 	'typeid' => $item['entry'],

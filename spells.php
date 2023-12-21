@@ -2,7 +2,7 @@
 
 require_once('includes/allspells.php');
 
-$smarty->config_load($conf_file, 'spell');
+$smarty->configload($conf_file, 'spell');
 
 @list($s1, $s2, $s3) = extract_values($podrazdel);
 
@@ -16,7 +16,7 @@ if(!$spells = load_cache(15, $cache_key))
 	if($s1 == 7)
 	{
 		// Классовые
-		$title = $smarty->get_config_vars('Class_spells');
+		$title = $smarty->getconfigvars('Class_spells');
 		$rows = $DB->select('
 				SELECT ?#, s.`spellID`, sla.skillID
 				FROM ?_spell s, ?_skill_line_ability sla, ?_spellicons i
@@ -40,19 +40,19 @@ if(!$spells = load_cache(15, $cache_key))
 		switch($s1)
 		{
 			case 6:
-				$title = $smarty->get_config_vars('Weapon_spells');
+				$title = $smarty->getconfigvars('Weapon_spells');
 				break;
 			case 8:
-				$title = $smarty->get_config_vars('Armor_spells');
+				$title = $smarty->getconfigvars('Armor_spells');
 				break;
 			case 10:
-				$title = $smarty->get_config_vars('Languages');
+				$title = $smarty->getconfigvars('Languages');
 				break;
 			case 9:
-				$title = $smarty->get_config_vars('Secondary_spells');
+				$title = $smarty->getconfigvars('Secondary_spells');
 				break;
 			case 11:
-				$title = $smarty->get_config_vars('Profession_spells');
+				$title = $smarty->getconfigvars('Profession_spells');
 				break;
 			default:
 				$title = '???';
@@ -81,7 +81,7 @@ if(!$spells = load_cache(15, $cache_key))
 	}
 	elseif($s1 == -3)
 	{
-		$title = $smarty->get_config_vars('Pet_spells');
+		$title = $smarty->getconfigvars('Pet_spells');
 		// Петы
 		$spells['sort'] = "'name'";
 		$pets = isset($s2) ? array($s2) : $pet_skill_categories;
@@ -103,7 +103,7 @@ if(!$spells = load_cache(15, $cache_key))
 	}
 	elseif($s1 == -4)
 	{
-		$title = $smarty->get_config_vars('Racial_spells');
+		$title = $smarty->getconfigvars('Racial_spells');
 		$spells['sort'] = "'name'";
 		// Racial Traits
 		$spellids = $DB->selectCol('SELECT spellID FROM ?_skill_line_ability WHERE racemask > 0');
@@ -124,7 +124,7 @@ if(!$spells = load_cache(15, $cache_key))
 	elseif ($s1 == -2)
 	{
 		// Talents
-		$title = $smarty->get_config_vars('Talents');
+		$title = $smarty->getconfigvars('Talents');
 		$spells['sort'] = "'name'";
 
 		$rows = array();
@@ -153,7 +153,7 @@ if(!$spells = load_cache(15, $cache_key))
 	elseif ($s1 == -7)
 	{
 		// Pet Talents
-		$title = $smarty->get_config_vars('Pet_talents');
+		$title = $smarty->getconfigvars('Pet_talents');
 		$spells['sort'] = "'name'";
 
 		$rows = array();
@@ -201,7 +201,7 @@ global $page;
 $page = array(
 	'Mapper' => false,
 	'Book' => false,
-	'Title' => ($title?$title.' - ':'').$smarty->get_config_vars('Spells'),
+	'Title' => ($title?$title.' - ':'').$smarty->getconfigvars('Spells'),
 	'tab' => 0,
 	'type' => 6,
 	'typeid' => 0,

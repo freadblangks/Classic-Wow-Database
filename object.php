@@ -5,7 +5,7 @@ require_once('includes/allitems.php');
 require_once('includes/allcomments.php');
 require_once('includes/allquests.php');
 
-$smarty->config_load($conf_file, 'object');
+$smarty->configload($conf_file, 'object');
 
 // номер объекта;
 $id = intval($podrazdel);
@@ -68,7 +68,7 @@ global $page;
 $page = array(
 	'Mapper' => true,
 	'Book' => $object['pagetext'] ? true : false,
-	'Title' => $object['name'].' - '.$smarty->get_config_vars('Objects'),
+	'Title' => $object['name'].' - '.$smarty->getconfigvars('Objects'),
 	'tab' => 0,
 	'type' => 2,
 	'typeid' => $object['entry'],

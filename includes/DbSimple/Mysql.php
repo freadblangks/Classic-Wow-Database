@@ -13,8 +13,8 @@
  *
  * @author Dmitry Koterov, http://forum.dklab.ru/users/DmitryKoterov/
  * @author Konstantin Zhinko, http://forum.dklab.ru/users/KonstantinGinkoTit/
- *
- * @version 2.x $Id: Mysql.php 163 2007-01-10 09:47:49Z dk $
+ * 
+ * @version 2.x $Id$
  */
 require_once dirname(__FILE__) . '/Generic.php';
 
@@ -37,15 +37,18 @@ class DbSimple_Mysql extends DbSimple_Generic_Database
             return $this->_setLastError("-1", "MySQL extension is not loaded", "mysql_connect");
         }
         $ok = $this->link = @mysql_connect(
-            $p['host'] . (empty($p['port'])? "" : ":".$p['port']),
+            $str = $p['host'] . (empty($p['port'])? "" : ":" . $p['port']),
             $p['user'],
             $p['pass'],
             true
         );
         $this->_resetLastError();
-        if (!$ok) return $this->_setDbError('mysql_connect()');
+        if (!$ok) return $this->_setDbError('mysql_connect("' . $str . '", "' . $p['user'] . '")');
         $ok = @mysql_select_db(preg_replace('{^/}s', '', $p['path']), $this->link);
         if (!$ok) return $this->_setDbError('mysql_select_db()');
+        if (isset($p["charset"])) {
+            $this->query('SET NAMES ?', $p["charset"]);
+        }
     }
 
 
@@ -67,7 +70,7 @@ class DbSimple_Mysql extends DbSimple_Generic_Database
 
     function& _performNewBlob($blobid=null)
     {
-        $obj =& new DbSimple_Mysql_Blob($this, $blobid);
+        $obj = new DbSimple_Mysql_Blob($this, $blobid);
         return $obj;
     }
 
@@ -76,7 +79,7 @@ class DbSimple_Mysql extends DbSimple_Generic_Database
     {
         $blobFields = array();
         for ($i=mysql_num_fields($result)-1; $i>=0; $i--) {
-            $type = mysql_field_type($result, $i);
+            $type = mysql_field_type($result, $i); 
             if (strpos($type, "BLOB") !== false) $blobFields[] = mysql_field_name($result, $i);
         }
         return $blobFields;
@@ -119,7 +122,7 @@ class DbSimple_Mysql extends DbSimple_Generic_Database
                     }
                 }
                 return true;
-
+        
             // Perform total calculation.
             case 'GET_TOTAL':
                 // Built-in calculation available?
@@ -130,7 +133,7 @@ class DbSimple_Mysql extends DbSimple_Generic_Database
                 // TODO: GROUP BY ... -> COUNT(DISTINCT ...)
                 $re = '/^
                     (?> -- [^\r\n]* | \s+)*
-                    (\s* SELECT \s+)                                      #1
+                    (\s* SELECT \s+)                                      #1     
                     (.*?)                                                 #2
                     (\s+ FROM \s+ .*?)                                    #3
                         ((?:\s+ ORDER \s+ BY \s+ .*?)?)                   #4
@@ -139,12 +142,12 @@ class DbSimple_Mysql extends DbSimple_Generic_Database
                 $m = null;
                 if (preg_match($re, $queryMain[0], $m)) {
                     $query[0] = $m[1] . $this->_fieldList2Count($m[2]) . " AS C" . $m[3];
-                    $skipTail = substr_count($m[4] . $m[5], '?');
+                    $skipTail = substr_count($m[4] . $m[5], '?'); 
                     if ($skipTail) array_splice($query, -$skipTail);
                 }
                 return true;
         }
-
+        
         return false;
     }
 
@@ -166,22 +169,26 @@ class DbSimple_Mysql extends DbSimple_Generic_Database
         return $result;
     }
 
-
+    
     function _performFetch($result)
     {
         $row = @mysql_fetch_assoc($result);
         if (mysql_error()) return $this->_setDbError($this->_lastQuery);
-        if ($row === false) return null;
+        if ($row === false) return null;        
         return $row;
     }
-
-
+    
+    
     function _setDbError($query)
     {
-        return $this->_setLastError(mysql_errno($this->link), mysql_error($this->link), $query);
+    	if ($this->link) {
+	        return $this->_setLastError(mysql_errno($this->link), mysql_error($this->link), $query);
+	    } else {
+	        return $this->_setLastError(mysql_errno(), mysql_error(), $query);
+	    }
     }
-
-
+    
+    
     function _calcFoundRowsAvailable()
     {
         $ok = version_compare(mysql_get_server_info($this->link), '4.0') >= 0;
@@ -192,7 +199,7 @@ class DbSimple_Mysql extends DbSimple_Generic_Database
 
 class DbSimple_Mysql_Blob extends DbSimple_Generic_Blob
 {
-    // MySQL does not support separate BLOB fetching.
+    // MySQL does not support separate BLOB fetching. 
     var $blobdata = null;
     var $curSeek = 0;
 

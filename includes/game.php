@@ -28,7 +28,7 @@ function add_loot(&$loot, $newloot)
 		if(isset($exist[$newitem['entry']]))
 		{
 			$loot[$exist[$item['entry']]]['mincount'] = min($loot[$exist[$item['entry']]]['mincount'], $newitem['mincount']);
-			$loot[$exist[$item['entry']]]['maxcount'] = max($loot[$exist[$item['entry']]]['maxcount'], $newitem['maxcount']);
+			$loot[$exist[$item['entry']]]['max_count'] = max($loot[$exist[$item['entry']]]['max_count'], $newitem['max_count']);
 			$loot[$exist[$item['entry']]]['percent'] += $newitem['percent'];
 			//$loot[$exist[$item['entry']]]['group'] = 0;
 		}
@@ -49,7 +49,7 @@ function loot($table, $lootid, $mod = 1)
 		SELECT l.ChanceOrQuestChance, l.mincountOrRef, l.maxcount, l.groupid, ?#, i.entry
 			{, loc.name_loc?d AS name_loc}
 		FROM ?# l
-			LEFT JOIN (?_icons a, item_template i) ON l.item=i.entry AND a.id=i.displayid
+			LEFT JOIN (?_icons a, item_template i) ON l.item=i.entry AND a.id=i.display_id
 			{LEFT JOIN (locales_item loc) ON loc.entry=i.entry AND ?d}
 		WHERE
 			l.entry=?d
@@ -77,13 +77,13 @@ function loot($table, $lootid, $mod = 1)
 		{
 			// Ссылка
 			if($row['mincountOrRef'] < 0)
-				add_loot($loot, loot('reference_loot_template', -$row['mincountOrRef'], abs($row['ChanceOrQuestChance']) / 100 * $row['maxcount'] * $mod));
+				add_loot($loot, loot('reference_loot_template', -$row['mincountOrRef'], abs($row['ChanceOrQuestChance']) / 100 * $row['max_count'] * $mod));
 			else
 				// Обыкновенный дроп
 				add_loot($loot, array(array_merge(array(
 						'percent'  => max(abs($row['ChanceOrQuestChance']) * $mod, 0)*sign($row['ChanceOrQuestChance']),
 						'mincount' => $row['mincountOrRef'],
-						'maxcount' => $row['maxcount'],
+						'max_count' => $row['max_count'],
 						'group' => $row['groupid']
 					),
 					iteminfo2($row, 0)
@@ -109,13 +109,13 @@ function loot($table, $lootid, $mod = 1)
 				// Ссылка
 				if($row['mincountOrRef'] < 0)
 				{
-					add_loot($loot, loot('reference_loot_template', -$row['mincountOrRef'], $chance / 100 * $row['maxcount'] * $mod));
+					add_loot($loot, loot('reference_loot_template', -$row['mincountOrRef'], $chance / 100 * $row['max_count'] * $mod));
 				}
 				else
 					add_loot($loot, array(array_merge(array(
 							'percent'  => $chance * $mod,
 							'mincount' => $row['mincountOrRef'],
-							'maxcount' => $row['maxcount'],
+							'max_count' => $row['max_count'],
 							'group' => $row['groupid']
 						),
 						iteminfo2($row, 0)
@@ -126,7 +126,7 @@ function loot($table, $lootid, $mod = 1)
 			{
 				$groups[$last_group][] = array_merge(array(
 						'mincount' => $row['mincountOrRef'],
-						'maxcount' => $row['maxcount'],
+						'max_count' => $row['max_count'],
 						'groupchance'=>$last_group_equal_chance * $mod,
 						'group' => $row['groupid']
 					),
@@ -201,15 +201,15 @@ function drop($table, $item)
 			$chance = max($chance, 0);
 			$chance = min($chance, 100);
 			$mincount = $row['mincountOrRef'];
-			$maxcount = $row['maxcount'];
+			$max_count = $row['max_count'];
 
 			if($mincount < 0)
 			{
 				// Референсная ссылка. Вероятность основывается на уже подсчитанной.
 				$num = $mincount;
 				$mincount = $drop[$num]['mincount'];
-				$chance = $chance * (1 - pow(1 - $drop[$num]['percent']/100, $maxcount));
-				$maxcount = $drop[$num]['maxcount']*$maxcount;
+				$chance = $chance * (1 - pow(1 - $drop[$num]['percent']/100, $max_count));
+				$max_count = $drop[$num]['max_count']*$max_count;
 			}
 
 			// Сохраняем подсчитанные для этих групп вероятности
@@ -219,18 +219,18 @@ function drop($table, $item)
 			{
 				// Этот же элемент уже падал в другой подгруппе - считаем общую вероятность.
 				$newmin =($drop[$num]['mincount'] < $mincount) ? $drop[$num]['mincount'] : $mincount;
-				$newmax = $drop[$num]['maxcount'] + $maxcount;
+				$newmax = $drop[$num]['max_count'] + $max_count;
 				$newchance = 100 - (100 - $drop[$num]['percent'])*(100-$chance)/100;
 				$drop[$num]['percent'] = $newchance;
 				$drop[$num]['mincount'] = $newmin;
-				$drop[$num]['maxcount'] = $newmax;
+				$drop[$num]['max_count'] = $newmax;
 			}
 			else
 			{
 				$drop[$num] = array();
 				$drop[$num]['percent'] = $chance;
 				$drop[$num]['mincount'] = $mincount;
-				$drop[$num]['maxcount'] = $maxcount;
+				$drop[$num]['max_count'] = $max_count;
 				$drop[$num]['checked'] = false;
 
 				if($AoWoWconf['limit'] > 0 && $num > 0 && ++$total > $AoWoWconf['limit'])
@@ -308,8 +308,10 @@ function transform_point($at, $point)
 
 	$result['x'] = round(100 - ($point['y']-$at['y_min']) / (($at['y_max']-$at['y_min']) / 100), 2);
 	$result['y'] = round(100 - ($point['x']-$at['x_min']) / (($at['x_max']-$at['x_min']) / 100), 2);
-	$result['r'] = sec_to_time($point['spawntimesecs']);
-	unset($result['spawntimesecs']);
+	$result['rmin'] = sec_to_time($point['spawntimesecsmin']);
+	$result['rmax'] = sec_to_time($point['spawntimesecsmax']);
+	unset($result['spawntimesecsmin']);
+	unset($result['spawntimesecsmax']);
 
 	return $result;
 }
@@ -531,7 +533,7 @@ function position($id, $type, $spawnMask = 0)
 	global $smarty, $exdata, $zonedata, $DB, $AoWoWconf, $cached_images;
 
 	$data = $DB->select('
-			SELECT guid, map AS m, position_x AS x, position_y AS y, spawntimesecs, {MovementType AS ?#, }"0" AS `type`
+			SELECT guid, map AS m, position_x AS x, position_y AS y, spawntimesecsmin, spawntimesecsmax, {Movement_Type AS ?#, }"0" AS `type`
 			FROM '.$type.'
 			WHERE id = ?d
 			{ GROUP BY ROUND(x,?d), ROUND(y,?d) }
@@ -686,7 +688,7 @@ function getLocation($id, $type) {
     global $smarty, $exdata, $zonedata, $DB, $UDWBaseconf;
 
     $data = $DB->select('
-		SELECT guid, map AS m, position_x AS x, position_y AS y, spawntimesecs, {MovementType AS ?#, }"0" AS `type` FROM ' . $type . ' 
+		SELECT guid, map AS m, position_x AS x, position_y AS y, spawntimesecsmin, spawntimesecsmax, {Movement_Type AS ?#, }"0" AS `type` FROM ' . $type . ' 
 		WHERE id = ?d 
 		GROUP BY ROUND(x,?d), ROUND(y,?d) 
 		ORDER BY x,y

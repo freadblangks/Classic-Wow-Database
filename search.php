@@ -9,7 +9,7 @@ require_once('includes/allnpcs.php');
 require_once('includes/allobjects.php');
 
 // Настраиваем Smarty ;)
-$smarty->config_load($conf_file, 'search');
+$smarty->configload($conf_file, 'search');
 
 // Строка поиска:
 $search = urldecode($podrazdel);
@@ -47,7 +47,7 @@ $rows = $DB->select('
 			{LEFT JOIN (locales_item l) ON l.entry=i.entry AND ?d}
 		WHERE
 			(i.name LIKE ? {OR i.entry IN (?a)})
-			AND a.id = i.displayid;
+			AND a.id = i.display_id;
 	',
 	$item_cols[3],
 	($m)? $_SESSION['locale']: DBSIMPLE_SKIP,
@@ -84,7 +84,7 @@ $rows = $DB->select('
 			(name LIKE ?
 			OR subname LIKE ?
 			{OR c.entry IN (?a)})
-			AND factiontemplateID=faction_A
+			AND factiontemplateID=faction
 	',
 	$npc_cols[0],
 	($m)? $_SESSION['locale']: DBSIMPLE_SKIP,
@@ -198,7 +198,7 @@ else
 	// Номер вкладки меню
 	$page['tab'] = 0;
 	// Заголовок страницы
-	$page['Title'] = $search.' - '.$smarty->get_config_vars('Search');
+	$page['Title'] = $search.' - '.$smarty->getconfigvars('Search');
 	$smarty->assign('page', $page);
 
 	$smarty->assign('mysql', $DB->getStatistics());

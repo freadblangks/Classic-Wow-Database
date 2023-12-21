@@ -3,7 +3,7 @@ require_once('includes/allitems.php');
 require_once('includes/allspells.php');
 require_once('includes/allcomments.php');
 
-$smarty->config_load($conf_file, 'itemset');
+$smarty->configload($conf_file, 'itemset');
 
 $id = intval($podrazdel);
 
@@ -68,7 +68,7 @@ global $page;
 $page = array(
 	'Mapper' => false,
 	'Book' => false,
-	'Title' => $itemset['name'].' - '.$smarty->get_config_vars('Item_Sets'),
+	'Title' => $itemset['name'].' - '.$smarty->getconfigvars('Item_Sets'),
 	'tab' => 0,
 	'type' => 4,
 	'typeid' => $itemset['entry'],

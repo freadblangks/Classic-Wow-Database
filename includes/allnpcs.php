@@ -3,8 +3,8 @@ require_once('includes/alllocales.php');
 require_once('includes/game.php');
 
 // Для списка creatureinfo()
-$npc_cols[0] = array('name', 'subname', 'minlevel', 'maxlevel', 'type', 'rank', 'A','H');
-$npc_cols[1] = array('subname', 'minlevel', 'maxlevel', 'type', 'rank', 'minhealth', 'maxhealth', 'minmana', 'maxmana', 'mingold', 'maxgold', 'lootid', 'spell1', 'spell2', 'spell3', 'spell4', 'A', 'H', 'mindmg', 'maxdmg', 'attackpower', 'dmg_multiplier', 'armor');
+$npc_cols[0] = array('name', 'subname', 'level_min', 'level_max', 'type', 'rank', 'A','H');
+$npc_cols[1] = array('subname', 'level_min', 'level_max', 'type', 'rank', 'health_min', 'health_max', 'mana_min', 'mana_max', 'gold_min', 'gold_max', 'loot_id', 'spell_id1', 'spell_id2', 'spell_id3', 'spell_id4', 'A', 'H', 'dmg_min', 'dmg_max', 'attack_power', 'dmg_multiplier', 'armor');
 
 // Функция информации о создании
 function creatureinfo2(&$Row)
@@ -19,8 +19,8 @@ function creatureinfo2(&$Row)
 	// Подимя создания
 	$creature['subname'] = localizedName($Row, 'subname');
 	// Min/Max уровни
-	$creature['minlevel'] = $Row['minlevel'];
-	$creature['maxlevel'] = $Row['maxlevel'];
+	$creature['level_min'] = $Row['level_min'];
+	$creature['level_max'] = $Row['level_max'];
 	// Get Location
 	$creature['location'] = getLocation($creature['entry'], "creature");
 	// Reaction
@@ -31,6 +31,7 @@ function creatureinfo2(&$Row)
 	$creature['tag'] = str_normalize($Row['subname']);
 	// Ранг NPC
 	$creature['classification'] = $Row['rank'];
+
 	return $creature;
 }
 

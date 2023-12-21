@@ -81,9 +81,9 @@ function QuestReplaceStr($STR)
 	// сначала заменяем $N, $R, $C
 	$toreplace = array (
 		0=>array('1'=>'$b', '2'=>'<br />',),
-		1=>array('1'=>'$r', '2'=>'&lt;'.(isset($smarty) ? $smarty->get_config_vars('race')  : 'race'  ).'&gt;',),
-		2=>array('1'=>'$c', '2'=>'&lt;'.(isset($smarty) ? $smarty->get_config_vars('class') : 'class' ).'&gt;',),
-		3=>array('1'=>'$n', '2'=>'&lt;'.(isset($smarty) ? $smarty->get_config_vars('name')  : 'name'  ).'&gt;',),
+		1=>array('1'=>'$r', '2'=>'&lt;'.(isset($smarty) ? $smarty->getconfigvars('race')  : 'race'  ).'&gt;',),
+		2=>array('1'=>'$c', '2'=>'&lt;'.(isset($smarty) ? $smarty->getconfigvars('class') : 'class' ).'&gt;',),
+		3=>array('1'=>'$n', '2'=>'&lt;'.(isset($smarty) ? $smarty->getconfigvars('name')  : 'name'  ).'&gt;',),
 		4=>array('1'=>'$G', '2'=>'$g',),
 	);
 	for($i=0;$i<=3;$i++)

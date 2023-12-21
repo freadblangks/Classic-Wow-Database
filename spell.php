@@ -6,7 +6,7 @@ require_once('includes/allnpcs.php');
 require_once('includes/allquests.php');
 require_once('includes/allcomments.php');
 
-$smarty->config_load($conf_file, 'spell');
+$smarty->configload($conf_file, 'spell');
 
 // номер спелла;
 $id = intval($podrazdel);
@@ -53,7 +53,7 @@ if(!$spell = load_cache(13, $cache_key))
 		if($row['manacost'])
 			$spell['manacost'] = $row['manacost'];
 		elseif($row['manacostpercent'])
-			$spell['manacost'] = $row['manacostpercent'].'% '.$smarty->get_config_vars('of_base');
+			$spell['manacost'] = $row['manacostpercent'].'% '.$smarty->getconfigvars('of_base');
 		// Уровень спелла
 		$spell['level'] = $row['levelspell'];
 		// Дальность
@@ -66,7 +66,7 @@ if(!$spell = load_cache(13, $cache_key))
 		$spell['rangename'] = $RangeRow['name_loc'.$_SESSION['locale']];
 		// Время каста
 		if($row['basecasttime'] > 0)
-			$spell['casttime'] = ($row['basecasttime'] / 1000).' '.$smarty->get_config_vars('seconds');
+			$spell['casttime'] = ($row['basecasttime'] / 1000).' '.$smarty->getconfigvars('seconds');
 		else if($row['ChannelInterruptFlags'])
 			$spell['casttime'] = 'Channeled';
 		else
@@ -76,7 +76,7 @@ if(!$spell = load_cache(13, $cache_key))
 			$spell['cooldown'] = $row['cooldown'] / 1000;
 		// Время действия спелла
 		if($row['durationBase'] > 0)
-			$spell['duration'] = ($row['durationBase'] / 1000).' '.$smarty->get_config_vars('seconds');
+			$spell['duration'] = ($row['durationBase'] / 1000).' '.$smarty->getconfigvars('seconds');
 		else
 			$spell['duration'] ='<span class="q0">n/a</span>';
 
@@ -286,7 +286,7 @@ if(!$spell = load_cache(13, $cache_key))
 				{ LEFT JOIN (locales_creature l) ON c.entry = l.entry AND ? }
 				WHERE
 					c.entry IN (?a)
-					AND factiontemplateID=faction_A
+					AND factiontemplateID=faction
 				',
 				$npc_cols[0],
 				($_SESSION['locale']>0)? $_SESSION['locale']: DBSIMPLE_SKIP,
@@ -310,7 +310,7 @@ if(!$spell = load_cache(13, $cache_key))
 			{ LEFT JOIN (locales_item l) ON c.entry = l.entry AND ? }
 			WHERE
 				(spellid_2 = ?d AND spelltrigger_2 = 6)
-				AND id=displayid
+				AND id=display_id
 			',
 			$item_cols[2],
 			($_SESSION['locale']>0)? $_SESSION['locale']: DBSIMPLE_SKIP,
@@ -394,7 +394,7 @@ if(!$spell = load_cache(13, $cache_key))
 				{ LEFT JOIN (locales_creature l) ON c.entry = l.entry AND ? }
 				WHERE
 					c.entry IN (SELECT entry FROM npc_trainer WHERE spell in (?a))
-					AND factiontemplateID=faction_A
+					AND factiontemplateID=faction
 				',
 				$npc_cols[0],
 				($_SESSION['locale']>0)? $_SESSION['locale']: DBSIMPLE_SKIP,
@@ -420,7 +420,7 @@ if(!$spell = load_cache(13, $cache_key))
 					OR (spellid_3 IN (?a))
 					OR (spellid_4 IN (?a))
 					OR (spellid_5 IN (?a)))
-					AND id=displayid
+					AND id=display_id
 				',
 				$item_cols[2],
 				($_SESSION['locale']>0)? $_SESSION['locale']: DBSIMPLE_SKIP,
@@ -443,11 +443,11 @@ if(!$spell = load_cache(13, $cache_key))
 			FROM ?_factiontemplate, creature_template c
 			{ LEFT JOIN (locales_creature l) ON c.entry = l.entry AND ? }
 			WHERE
-				(spell1 = ?d
-				OR spell2 = ?d
-				OR spell3 = ?d
-				OR spell4 = ?d)
-				AND factiontemplateID=faction_A
+				(spell_id1 = ?d
+				OR spell_id2 = ?d
+				OR spell_id3 = ?d
+				OR spell_id4 = ?d)
+				AND factiontemplateID=faction
 			',
 			$npc_cols[0],
 			($_SESSION['locale']>0)? $_SESSION['locale']: DBSIMPLE_SKIP,
@@ -470,7 +470,7 @@ if(!$spell = load_cache(13, $cache_key))
 			{ LEFT JOIN (locales_item l) ON c.entry = l.entry AND ? }
 			WHERE
 				(spellid_1 = ?d OR (spellid_2 = ?d AND spelltrigger_2!=6) OR spellid_3 = ?d OR spellid_4 = ?d OR spellid_5 = ?d)
-				AND id=displayID
+				AND id=display_ID
 			',
 			$item_cols[2],
 			($_SESSION['locale']>0)? $_SESSION['locale']: DBSIMPLE_SKIP,
@@ -539,7 +539,7 @@ global $page;
 $page = array(
 	'Mapper' => false,
 	'Book' => false,
-	'Title' => $spell['name'].' - '.$smarty->get_config_vars('Spells'),
+	'Title' => $spell['name'].' - '.$smarty->getconfigvars('Spells'),
 	'tab' => 0,
 	'type' => 6,
 	'typeid' => $spell['entry'],

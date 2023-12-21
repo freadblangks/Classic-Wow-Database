@@ -859,7 +859,7 @@ function allspellsinfo2(&$row, $level=0)
 		if(IsSet($allitems[$row['effect1itemtype']]['icon']))
 			$allspells[$num]['icon'] = $allitems[$row['effect1itemtype']]['icon'];
 		else
-			$allspells[$num]['icon'] = $DB->selectCell('SELECT iconname FROM ?_icons, item_template WHERE id = displayid AND entry = ?d LIMIT 1', $row['effect1itemtype']);
+			$allspells[$num]['icon'] = $DB->selectCell('SELECT iconname FROM ?_icons, item_template WHERE id = display_id AND entry = ?d LIMIT 1', $row['effect1itemtype']);
 	} else {
 		$allspells[$num]['icon'] = $row['iconname'];
 	}

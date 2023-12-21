@@ -10,11 +10,11 @@ require_once('includes/allquests.php');
 // для allitems($level=0) - соответствия номер-иконка
 $item_cols[0] = array('entry', 'patch', 'iconname', 'quality', 'name');
 // для allitems($level=1) - ajax, тултип
-$item_cols[1] = array('entry', 'patch', 'name', 'quality', 'iconname', 'maxcount', 'bonding', 'startquest', 'Map', 'ContainerSlots', 'class', 'InventoryType', 'subclass', 'dmg_type1', 'dmg_min1', 'dmg_max1', 'delay', 'dmg_type2', 'dmg_min2', 'dmg_max2', 'armor', 'block', 'stat_type1', 'stat_type2', 'stat_type3', 'stat_type4', 'stat_type5', 'stat_type6', 'stat_type7', 'stat_type8', 'stat_type9', 'stat_type10', 'stat_value1', 'stat_value2', 'stat_value3', 'stat_value4', 'stat_value5', 'stat_value6', 'stat_value7', 'stat_value8', 'stat_value9', 'stat_value10', 'holy_res', 'fire_res', 'nature_res', 'frost_res', 'shadow_res', 'arcane_res', 'RandomProperty', 'MaxDurability', 'AllowableClass', 'RequiredLevel', 'RequiredSkill', 'requiredspell', 'RequiredReputationFaction', 'RequiredReputationRank', 'spellid_1', 'spellid_2', 'spellid_3', 'spellid_4', 'spellid_5', 'spelltrigger_1', 'spelltrigger_2', 'spelltrigger_3', 'spelltrigger_4', 'spelltrigger_5', 'description', 'PageText', 'BagFamily', 'RequiredSkillRank');
+$item_cols[1] = array('entry', 'patch', 'name', 'quality', 'iconname', 'max_count', 'bonding', 'start_quest', 'map_bound', 'Container_Slots', 'class', 'Inventory_Type', 'subclass', 'dmg_type1', 'dmg_min1', 'dmg_max1', 'delay', 'dmg_type2', 'dmg_min2', 'dmg_max2', 'armor', 'block', 'stat_type1', 'stat_type2', 'stat_type3', 'stat_type4', 'stat_type5', 'stat_type6', 'stat_type7', 'stat_type8', 'stat_type9', 'stat_type10', 'stat_value1', 'stat_value2', 'stat_value3', 'stat_value4', 'stat_value5', 'stat_value6', 'stat_value7', 'stat_value8', 'stat_value9', 'stat_value10', 'holy_res', 'fire_res', 'nature_res', 'frost_res', 'shadow_res', 'arcane_res', 'random_property', 'max_durability', 'allowable_class', 'Required_Level', 'Required_Skill', 'required_spell', 'Required_Reputation_Faction', 'Required_Reputation_rank', 'spellid_1', 'spellid_2', 'spellid_3', 'spellid_4', 'spellid_5', 'spelltrigger_1', 'spelltrigger_2', 'spelltrigger_3', 'spelltrigger_4', 'spelltrigger_5', 'description', 'Page_Text', 'Bag_Family', 'Required_Skill_Rank');
 // для iteminfo($level=0) - строчки списка
-$item_cols[2] = array('name', 'patch', 'quality', 'iconname', 'InventoryType', 'ItemLevel', 'RequiredLevel', 'class', 'subclass', 'stackable', 'BuyPrice', 'armor', 'dmg_type1', 'dmg_min1', 'dmg_max1', 'delay', 'dmg_type2', 'dmg_min2', 'dmg_max2', 'ContainerSlots');
+$item_cols[2] = array('name', 'patch', 'quality', 'iconname', 'Inventory_Type', 'Item_Level', 'Required_Level', 'class', 'subclass', 'stackable', 'Buy_Price', 'armor', 'dmg_type1', 'dmg_min1', 'dmg_max1', 'delay', 'dmg_type2', 'dmg_min2', 'dmg_max2', 'Container_Slots');
 // для iteminfo($level=1)
-$item_cols[3] = array('entry', 'patch', 'name', 'quality', 'iconname', 'maxcount', 'bonding', 'startquest', 'Map', 'ContainerSlots', 'class', 'InventoryType', 'subclass', 'dmg_type1', 'dmg_min1', 'dmg_max1', 'delay', 'dmg_type2', 'dmg_min2', 'dmg_max2', 'armor', 'block', 'stat_type1', 'stat_type2', 'stat_type3', 'stat_type4', 'stat_type5', 'stat_type6', 'stat_type7', 'stat_type8', 'stat_type9', 'stat_type10', 'stat_value1', 'stat_value2', 'stat_value3', 'stat_value4', 'stat_value5', 'stat_value6', 'stat_value7', 'stat_value8', 'stat_value9', 'stat_value10', 'holy_res', 'fire_res', 'nature_res', 'frost_res', 'shadow_res', 'arcane_res', 'RandomProperty', 'MaxDurability', 'AllowableClass', 'RequiredLevel', 'RequiredSkill', 'requiredspell', 'RequiredReputationFaction', 'RequiredReputationRank', 'spellid_1', 'spellid_2', 'spellid_3', 'spellid_4', 'spellid_5', 'spelltrigger_1', 'spelltrigger_2', 'spelltrigger_3', 'spelltrigger_4', 'spelltrigger_5', 'description', 'PageText', 'BagFamily', 'RequiredSkillRank', 'ItemLevel', 'stackable', 'BuyPrice', 'DisenchantID', 'SellPrice', 'displayid');
+$item_cols[3] = array('entry', 'patch', 'name', 'quality', 'iconname', 'max_count', 'bonding', 'start_quest', 'map_bound', 'Container_Slots', 'class', 'Inventory_Type', 'subclass', 'dmg_type1', 'dmg_min1', 'dmg_max1', 'delay', 'dmg_type2', 'dmg_min2', 'dmg_max2', 'armor', 'block', 'stat_type1', 'stat_type2', 'stat_type3', 'stat_type4', 'stat_type5', 'stat_type6', 'stat_type7', 'stat_type8', 'stat_type9', 'stat_type10', 'stat_value1', 'stat_value2', 'stat_value3', 'stat_value4', 'stat_value5', 'stat_value6', 'stat_value7', 'stat_value8', 'stat_value9', 'stat_value10', 'holy_res', 'fire_res', 'nature_res', 'frost_res', 'shadow_res', 'arcane_res', 'random_property', 'max_durability', 'allowable_class', 'Required_Level', 'Required_Skill', 'required_spell', 'Required_Reputation_Faction', 'Required_Reputation_rank', 'spellid_1', 'spellid_2', 'spellid_3', 'spellid_4', 'spellid_5', 'spelltrigger_1', 'spelltrigger_2', 'spelltrigger_3', 'spelltrigger_4', 'spelltrigger_5', 'description', 'Page_Text', 'Bag_Family', 'Required_Skill_Rank', 'Item_Level', 'stackable', 'Buy_Price', 'Disenchant_ID', 'Sell_Price', 'display_id');
 
 $resz = array('holy_res', 'fire_res', 'nature_res', 'frost_res', 'shadow_res', 'arcane_res');
 $resz_desc = array (LOCALE_HOLY_RESISTANCE, LOCALE_FIRE_RESISTANCE, LOCALE_NATURE_RESISTANCE, LOCALE_FROST_RESISTANCE, LOCALE_SHADOW_RESISTANCE, LOCALE_ARCANE_RESISTANCE);
@@ -283,7 +283,7 @@ function allitemsinfo($id, $level=0)
 			}
 			WHERE
 				i.entry=?
-				AND id=displayid
+				AND id=display_id
 		) a
 		INNER JOIN (
 			SELECT *, MAX(patch) patchno
@@ -327,22 +327,22 @@ function render_item_tooltip(&$Row)
 	$x .= $bond[$Row['bonding']];
 
 	// Уникальность вещи
-	if($Row['maxcount']==1)
+	if($Row['max_count']==1)
 		$x .= '<br />'.LOCALE_UNIQUE;
 
-	if($Row['maxcount']>1)
-		$x .= ' ('.$Row['maxcount'].')';
+	if($Row['max_count']>1)
+		$x .= ' ('.$Row['max_count'].')';
 
- 	if($Row['startquest'])
-		$x .= '<br /><a class="q1" href="?quest='.$Row['startquest'].'">'.LOCALE_START_QUEST.'</a>';
+ 	if($Row['start_quest'])
+		$x .= '<br /><a class="q1" href="?quest='.$Row['start_quest'].'">'.LOCALE_START_QUEST.'</a>';
 
 	// Локация, для которой предназначен этот предмет
-	if($Row['Map'])
-		$x .= '<br />'.$DB->selectCell('SELECT name_loc'.$_SESSION['locale'].' FROM ?_zones WHERE mapid=?d LIMIT 1', $Row['Map']);;
+	if($Row['map_bound'])
+		$x .= '<br />'.$DB->selectCell('SELECT name_loc'.$_SESSION['locale'].' FROM ?_zones WHERE map_boundid=?d LIMIT 1', $Row['map_bound']);;
 
 	// Теперь в зависимости от типа предмета
 	if($Row['ContainerSlots'] > 1)
-		$x .= '<br />'.$Row['ContainerSlots'].LOCALE_SLOT.$bag_typez[$Row['BagFamily']];
+		$x .= '<br />'.$Row['ContainerSlots'].LOCALE_SLOT.$bag_typez[$Row['Bag_Family']];
 	if(in_array($Row['class'], array(4, 2, 6, 7)))
 	{
 		// Броня (4), Оружие(2), Патроны(6)
@@ -392,7 +392,7 @@ function render_item_tooltip(&$Row)
 	// Различные бонусы
 	for($j=1;$j<=10;$j++)
 		if(($Row['stat_type'.$j]!=0) and ($Row['stat_value'.$j]!=0))
-			$x .= b_type($Row['stat_type'.$j], $Row['stat_value'.$j], $Row['RequiredLevel']);
+			$x .= b_type($Row['stat_type'.$j], $Row['stat_value'.$j], $Row['Required_Level']);
 
 	// Бонусы к сопротивлениям магий
 	foreach($resz as $j => $RowName)
@@ -404,40 +404,40 @@ function render_item_tooltip(&$Row)
 	}
 
 	// Случайные бонусы
-	if($Row['RandomProperty'])
+	if($Row['random_property'])
 		$green[] = 'Random Bonuses';
 
 	// Состояние
-	if($Row['MaxDurability'])
-		$x .= LOCALE_DURABILITY.' '.$Row['MaxDurability'].' / '.$Row['MaxDurability'].'<br />';
+	if($Row['max_durability'])
+		$x .= LOCALE_DURABILITY.' '.$Row['max_durability'].' / '.$Row['max_durability'].'<br />';
 	// Требуемые классы
-	if(classes($Row['AllowableClass']))
-		$x .= LOCALE_CLASSES.': '.classes($Row['AllowableClass']).'<br />';
+	if(classes($Row['allowable_class']))
+		$x .= LOCALE_CLASSES.': '.classes($Row['allowable_class']).'<br />';
 
 	// Требуемый уровень
-	if($Row['RequiredLevel']>1)
-		$x .= LOCALE_REQUIRES_LEVEL.' '.$Row['RequiredLevel'].'<br />';
+	if($Row['Required_Level']>1)
+		$x .= LOCALE_REQUIRES_LEVEL.' '.$Row['Required_Level'].'<br />';
 
 	// Требуемый скилл (755 - Jewecrafting)
-	if(($Row['RequiredSkill']) and ($Row['RequiredSkill']!=755))
+	if(($Row['Required_Skill']) and ($Row['Required_Skill']!=755))
 	{
-		$x .= LOCALE_REQUIRES.' '.$DB->selectCell('SELECT name_loc'.$_SESSION['locale'].' FROM ?_skill WHERE skillID=?d LIMIT 1', $Row['RequiredSkill']);
-		if($Row['RequiredSkillRank'])
-			$x .= ' ('.$Row['RequiredSkillRank'].')';
+		$x .= LOCALE_REQUIRES.' '.$DB->selectCell('SELECT name_loc'.$_SESSION['locale'].' FROM ?_skill WHERE skillID=?d LIMIT 1', $Row['Required_Skill']);
+		if($Row['Required_Skill_Rank'])
+			$x .= ' ('.$Row['Required_Skill_Rank'].')';
 		$x .= '<br />';
 	}
 
 	// Требуемый спелл
-	if($Row['requiredspell'])
-		$x .= LOCALE_REQUIRES.' '.req_spell($Row['requiredspell']).'<br />';
+	if($Row['required_spell'])
+		$x .= LOCALE_REQUIRES.' '.req_spell($Row['required_spell']).'<br />';
 
 	// Требуемая репутация
-	if($Row['RequiredReputationFaction'])
+	if($Row['Required_Reputation_Faction'])
 	{
 		require_once ('includes/game.php');
 		global $rep_levels;
-		$row = factioninfo($Row['RequiredReputationFaction']);
-		$x .= LOCALE_REQUIRES.' '.$row['name'].' - '.$rep_levels[$Row['RequiredReputationRank']];
+		$row = factioninfo($Row['Required_Reputation_Faction']);
+		$x .= LOCALE_REQUIRES.' '.$row['name'].' - '.$rep_levels[$Row['Required_Reputation_rank']];
 	}
 
 	$x .= '</td></tr></table>';
@@ -465,7 +465,7 @@ function render_item_tooltip(&$Row)
 		else
 			$x .= '<span class="q">"'.localizedName($Row, 'description').'"</span>';
 	}
-	if($Row['PageText'])
+	if($Row['Page_Text'])
 		$x .= '<br /><span class="q2">&lt;Right Click To Read&gt;</span>'; // TODO: locale
 
 	// Item Set
@@ -543,14 +543,14 @@ function iteminfo2(&$Row, $level=0)
 	$item['name'] = localizedName($Row);
 	// Тип вещи
 	$item['type'] = $Row['InventoryType'];
-	$item['displayid'] = $Row['displayid'];
+	$item['display_id'] = $Row['display_id'];
 	// Уровень вещи
-	$item['level'] = $Row['ItemLevel'];
+	$item['level'] = $Row['Item_Level'];
 	// Качество вещи...
 	$item['quality'] = $Row['quality'];
 	$item['quality2'] = 7 - $Row['quality'];
 	// Требуемый уровень вещи:
-	$item['reqlevel'] = $Row['RequiredLevel'];
+	$item['reqlevel'] = $Row['Required_Level'];
 	// Класс и подкласс вещи
 	// TODO: немного неверное определение
 	$item['classs'] = $Row['class'];
@@ -581,7 +581,7 @@ function iteminfo2(&$Row, $level=0)
 	}
 	// Armor
 	$item['armor'] = $Row['armor'];
-	$item['slot'] = $Row['InventoryType'];
+	$item['slot'] = $Row['Inventory_Type'];
 	// Bag
 	if($Row['class']==1)
 		$item['slots'] = $Row['ContainerSlots'];
@@ -589,22 +589,22 @@ function iteminfo2(&$Row, $level=0)
 	allitemsinfo2($Row, 0);
 	if($level>0)
 	{
-		$item['BuyPrice'] = $Row['BuyPrice'];
+		$item['Buy_Price'] = $Row['Buy_Price'];
 		//
-		$item['BagFamily'] = $Row['BagFamily'];
+		$item['Bag_Family'] = $Row['Bag_Family'];
 		$item['ContainerSlots'] = $Row['ContainerSlots'];
-		$item['DisenchantID'] = $Row['DisenchantID'];
+		$item['Disenchant_ID'] = $Row['Disenchant_ID'];
 		// Цена на продажу
-		$item['sellgold'] = floor($Row['SellPrice']/10000);
-		$item['sellsilver'] = floor($Row['SellPrice']%10000/100);
-		$item['sellcopper'] = floor($Row['SellPrice']%100);
+		$item['sellgold'] = floor($Row['Sell_Price']/10000);
+		$item['sellsilver'] = floor($Row['Sell_Price']%10000/100);
+		$item['sellcopper'] = floor($Row['Sell_Price']%100);
 		// Цена за покупку
-		$item['buygold'] = floor($Row['BuyPrice']/10000);
-		$item['buysilver'] = floor($Row['BuyPrice']%10000/100);
-		$item['buycopper'] = floor($Row['BuyPrice']%100);
+		$item['buygold'] = floor($Row['Buy_Price']/10000);
+		$item['buysilver'] = floor($Row['Buy_Price']%10000/100);
+		$item['buycopper'] = floor($Row['Buy_Price']%100);
 		// Начинает квест
-		if($Row['startquest'])
-			$item['starts'] = array(GetDBQuestInfo($Row['startquest'], 0xFFFFFF));
+		if($Row['start_quest'])
+			$item['starts'] = array(GetDBQuestInfo($Row['start_quest'], 0xFFFFFF));
 		// Информационное окно
 		$item['info'] = render_item_tooltip($Row);
 		// Обучает
@@ -673,7 +673,7 @@ function iteminfo($id, $level = 0)
 		FROM ?_icons, item_template i
 		{ LEFT JOIN (locales_item l) ON l.entry=i.entry AND ? }
 		WHERE
-			(i.entry=?d and id=displayid)
+			(i.entry=?d and id=display_id)
 		LIMIT 5
 		',
 		$item_cols[2+$level],

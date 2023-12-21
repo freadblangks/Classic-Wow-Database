@@ -3,7 +3,7 @@
 // Необходима функция creatureinfo
 require_once('includes/allnpcs.php');
 
-$smarty->config_load($conf_file, 'npc');
+$smarty->configload($conf_file, 'npc');
 
 @list($type) = extract_values($podrazdel);
 
@@ -22,9 +22,9 @@ if(!$npcs = load_cache(2, $cache_key))
 		FROM ?_factiontemplate, creature_template c
 		{ LEFT JOIN (locales_creature l) ON l.entry=c.entry AND ? }
 		WHERE
-			factiontemplateID=faction_A
+			factiontemplateID=faction
 			{AND type=?}
-		ORDER BY minlevel DESC, name
+		ORDER BY level_min DESC, name
 		{LIMIT ?d}
 		',
 		$npc_cols[0],
@@ -45,7 +45,7 @@ global $page;
 $page = array(
 	'Mapper' => false,
 	'Book' => false,
-	'Title' => $smarty->get_config_vars('NPCs'),
+	'Title' => $smarty->getconfigvars('NPCs'),
 	'tab' => 0,
 	'type' => 0,
 	'typeid' => 0,

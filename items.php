@@ -3,7 +3,7 @@
 // Необходима функция iteminfo
 require_once('includes/allitems.php');
 
-$smarty->config_load($conf_file, 'items');
+$smarty->configload($conf_file, 'items');
 
 // Разделяем из запроса класс, подкласс и тип вещей
 @list($class, $subclass, $type) = extract_values($podrazdel);
@@ -16,15 +16,15 @@ if(!$items = load_cache(7, $cache_key))
 
 	// Составляем запрос к БД, выполняющий поиск по заданным классу и подклассу
 	$rows = $DB->select('
-		SELECT ?#, i.entry, maxcount
+		SELECT ?#, i.entry, max_count
 			{, l.name_loc?d AS name_loc}
 		FROM ?_icons, item_template i
 			{LEFT JOIN (locales_item l) ON l.entry=i.entry AND ?d}
 		WHERE
-			id=displayid
+			id=display_id
 			{ AND class = ? }
 			{ AND subclass = ? }
-			{ AND InventoryType = ? }
+			{ AND Inventory_Type = ? }
 		ORDER BY quality DESC, name
 		{ LIMIT ?d }
 		',
@@ -44,11 +44,10 @@ if(!$items = load_cache(7, $cache_key))
 	save_cache(7, $cache_key, $items);
 }
 
-global $page;
 $page = array(
 	'Mapper' => false,
 	'Book' => false,
-	'Title' => $smarty->get_config_vars('Items'),
+	'Title' => $smarty->getconfigvars('Items'),
 	'tab' => 0,
 	'type' => 0,
 	'typeid' => 0,

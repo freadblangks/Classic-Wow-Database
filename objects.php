@@ -1,6 +1,6 @@
 <?php
 
-$smarty->config_load($conf_file, 'object');
+$smarty->configload($conf_file, 'object');
 
 @list($type) = extract_values($podrazdel);
 
@@ -14,7 +14,7 @@ if(!$data = load_cache(4, $cache_key))
 	$rows = $DB->select('
 			SELECT g.* {, a.requiredskill1 as ?#} {, a.requiredskill2 as ?#}
 				{, l.name_loc?d AS `name_loc`}
-			FROM {gameobject_questrelation ?#, } {?_lock ?#, } gameobject_template g
+			FROM {gameobject_questrelation ?#, } {aowow_lock ?#, } gameobject_template g
 				{LEFT JOIN (locales_gameobject l) ON l.entry=g.entry AND ?d}
 			WHERE 
 				name != ""
@@ -68,7 +68,7 @@ global $page;
 $page = array(
 	'Mapper' => false,
 	'Book' => false,
-	'Title' => $smarty->get_config_vars('Objects'),
+	'Title' => $smarty->getconfigvars('Objects'),
 	'tab' => 0,
 	'type' => 0,
 	'typeid' => 0,

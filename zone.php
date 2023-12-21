@@ -4,7 +4,7 @@ require_once('includes/game.php');
 require_once('includes/allitems.php');
 require_once('includes/allcomments.php');
 //require_once('includes/allscreenshots.php');
-$smarty->config_load($conf_file, 'zone');
+$smarty->configload($conf_file, 'zone');
 
 $id = $podrazdel;
 
@@ -49,11 +49,11 @@ if(!$zone = load_cache(16, $id))
 	{
 		// Flight masters
 		$rows = $DB->select('
-			SELECT ct.entry, ct.name, ct.subname, ct.faction_A, lc.name_loc?d, lc.subname_loc?d, ct.npcflag, position_x, position_y
+			SELECT ct.entry, ct.name, ct.subname, ct.faction, lc.name_loc?d, lc.subname_loc?d, ct.npc_flags, position_x, position_y
 			FROM creature c, creature_template ct
 			LEFT JOIN locales_creature lc ON ct.entry = lc.entry
 			WHERE c.id = ct.entry
-			  AND (ct.npcflag = 11 OR ct.npcflag = 16388 OR ct.npcflag = 33 OR ct.npcflag= 135)
+			  AND (ct.npc_flags = 11 OR ct.npc_flags = 16388 OR ct.npc_flags = 33 OR ct.npc_flags= 135)
 			  AND c.map = ?d
 			  AND c.position_x > ?f
 			  AND c.position_x < ?f
@@ -110,7 +110,7 @@ if(!$zone = load_cache(16, $id))
 					}
 					WHERE
 						c.entry=?d
-						AND factiontemplateID=faction_A
+						AND factiontemplateID=faction
 					LIMIT 1 
 				', $row['entry']
 				);
@@ -203,7 +203,7 @@ global $page;
 $page = array(
 	'Mapper' => true,
 	'Book' => false,
-	'Title' => $zone['name'].' - '.$smarty->get_config_vars('Zone'),
+	'Title' => $zone['name'].' - '.$smarty->getconfigvars('Zone'),
 	'tab' => 0,
 	'type' => 7,
 	'typeid' => $zone['areatableID'],

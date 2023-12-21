@@ -48,8 +48,8 @@ new Listview(
 					{if $data[i].subname}
 						tag:'{$data[i].subname|escape:"quotes"}',
 					{/if}
-					minlevel:{$data[i].minlevel},
-					maxlevel:{$data[i].maxlevel},
+					minlevel:{$data[i].level_min},
+					maxlevel:{$data[i].level_max},
 					{if $data[i].location}location:[{$data[i].location}],{else}location:0,{/if}
 					type:{$data[i].type},
 					classification:{$data[i].classification},
